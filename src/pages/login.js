@@ -16,13 +16,16 @@ function Login() {
     setPasswordShown(passwordShown ? false : true);
   };
 
-  function onBlurChange(element){
-    document.getElementById(element).style.borderBottomColor = 'red'
-  }
-
-  function onChange(element){
-
-    document.getElementById(element).style.borderBottomColor = 'blue'
+  function handleEvent(event){
+    const { id, value } = event.target;
+    if(event.type === 'blur'){
+      //OnBlur
+      document.getElementById(id).style.borderBottomColor = 'red'
+    }else if((event.type === 'change')){
+      //OnChange 
+      document.getElementById(id).style.borderBottomColor = 'blue'
+      document.getElementById(id).value = value.trim()
+    }
   }
 
   return (
@@ -37,9 +40,9 @@ function Login() {
           <CardBody>
           <form>
             <CardInput placeholder="Username" id='username' type="text" 
-              onBlur={() => onBlurChange('username')} onChange={() => onChange('username')}  required />
+              onBlur={(e) => handleEvent(e)} onChange={(e) => handleEvent(e)} required />
             <CardInput placeholder="Password" id='password' type={passwordShown ? "text" : "password"}
-              onBlur={() => onBlurChange('password')} onChange={() => onChange('password')}  required/>
+              onBlur={(e) => handleEvent(e)} onChange={(e) => handleEvent(e)}  required/>
               <i onClick={togglePasswordVisiblity}>{eye}</i>
             <Button bg='#e5195f' color='#fff' onClick={togglePasswordVisiblity}  type="submit">Login</Button>
           </form>
