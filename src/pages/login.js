@@ -1,30 +1,35 @@
-import React from 'react';
+import React from "react";
 
-import { Container } from "./../components/styles/container.styled"
-import { Button } from "./../components/styles/button.styled"
-import {CardWrapper, CardHeader, CardHeading, CardBody, CardInput} from "./../components/styles/card";
+import { Container } from "./../components/styles/container.styled";
+import { Button } from "./../components/styles/button.styled";
+import {
+  CardWrapper,
+  CardHeader,
+  CardHeading,
+  CardBody,
+  CardInput,
+} from "./../components/styles/card";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 const eye = <FontAwesomeIcon icon={faEye} />;
 
 function Login() {
-
   const [passwordShown, setPasswordShown] = React.useState(false);
 
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true);
   };
 
-  function handleEvent(event){
-    const { id, value } = event.target;
-    if(event.type === 'blur'){
+  function handleEvent(event) {
+    const { value } = event.target;
+    if (event.type === "blur") {
       //OnBlur
-      document.getElementById(id).style.borderBottomColor = 'red'
-    }else if((event.type === 'change')){
-      //OnChange 
-      document.getElementById(id).style.borderBottomColor = 'blue'
-      document.getElementById(id).value = value.trim()
+      event.target.style.borderBottomColor = "red";
+    } else if (event.type === "change") {
+      //OnChange
+      event.target.style.borderBottomColor = "blue";
+      event.target.value = value.trim(); 
     }
   }
 
@@ -33,25 +38,41 @@ function Login() {
       <Container>
         <CardWrapper>
           <CardHeader>
-            <CardHeading>
-              Login
-            </CardHeading>
+            <CardHeading>Login</CardHeading>
           </CardHeader>
           <CardBody>
-          <form>
-            <CardInput placeholder="Username" id='username' type="text" 
-              onBlur={(e) => handleEvent(e)} onChange={(e) => handleEvent(e)} required />
-            <CardInput placeholder="Password" id='password' type={passwordShown ? "text" : "password"}
-              onBlur={(e) => handleEvent(e)} onChange={(e) => handleEvent(e)}  required/>
+            <form>
+              <CardInput
+                placeholder="Username"
+                id="username"
+                type="text"
+                onBlur={(e) => handleEvent(e)}
+                onChange={(e) => handleEvent(e)}
+                required
+              />
+              <CardInput
+                placeholder="Password"
+                id="password"
+                type={passwordShown ? "text" : "password"}
+                onBlur={(e) => handleEvent(e)}
+                onChange={(e) => handleEvent(e)}
+                required
+              />
               <i onClick={togglePasswordVisiblity}>{eye}</i>
-            <Button bg='#e5195f' color='#fff' onClick={togglePasswordVisiblity}  type="submit">Login</Button>
-          </form>
+              <Button
+                bg="#e5195f"
+                color="#fff"
+                onClick={togglePasswordVisiblity}
+                type="submit"
+              >
+                Login
+              </Button>
+            </form>
           </CardBody>
-          </CardWrapper> 
-     </Container>
+        </CardWrapper>
+      </Container>
     </>
-   );
+  );
 }
 
-
-export default Login; 
+export default Login;
