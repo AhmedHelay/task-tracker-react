@@ -1,10 +1,12 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 
 import {Container} from './../components/styles/container.styled'
 import {Button} from './../components/styles/button.styled'
 import {CardWrapper, CardBody, CardInput} from './../components/styles/card'
 import {SmallError} from '../components/styles/small_error_message.styled'
 import {LoginFormValidator} from '../validators/login_form_validator'
+import isObjectUndefined from '../utils/errorChecker'
+
 import DefaultLayout from './../components/layouts/default_layout'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -14,8 +16,9 @@ const eyeOff = <FontAwesomeIcon icon={faEyeSlash} />
 
 function Login() {
   const [passwordShown, setPasswordShown] = useState(false)
+  const [isSubmit, setIsSubmit] = useState(false)
   const [formValues, setFormValues] = useState({
-    username: '',
+    email: '',
     password: ''
   })
   const [formErrors, setFormErrors] = useState({})
@@ -33,27 +36,30 @@ function Login() {
     }
   }
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault()
-    setFormErrors(LoginFormValidator(formValues))
-    // if (Object.keys(formErrors).length === 0) setIsSubmit(true)
+    setIsSubmit(isObjectUndefined(formErrors))
   }
+
+  useEffect(() => {
+    setFormErrors(LoginFormValidator(formValues))
+  }, [formValues])
 
   return (
     <DefaultLayout title="Login">
       <Container>
         <CardWrapper>
           <CardBody>
-            <form onSubmit={() => handleSubmit}>
+            <form onSubmit={handleSubmit}>
               <CardInput
-                placeholder="Username"
-                id="username"
+                placeholder="Email"
+                id="email"
                 type="text"
                 onBlur={(e) => handleEvent(e)}
                 onChange={(e) => handleEvent(e)}
                 required
               />
-              <SmallError>{formErrors.username}</SmallError>
+              <SmallError>{formErrors.email}</SmallError>
               <CardInput
                 placeholder="Password"
                 id="password"
@@ -67,7 +73,7 @@ function Login() {
               <i onClick={togglePasswordVisiblity}>
                 {passwordShown ? eyeOn : eyeOff}
               </i>
-              <Button bg="#0F9D58" color="#fff" type="submit">
+              <Button bg="#0F9D58" color="#fff" disabled={isSubmit}>
                 Login
               </Button>
             </form>
