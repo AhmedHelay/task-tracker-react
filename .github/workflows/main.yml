@@ -36,26 +36,20 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+      - run: yarn 
       - run: npm ci
       - run: npm run build --if-present
-     # No test added yet 
-     #- run: npm test      
-      # Yarn tests
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
-          cache: 'yarn'
-      - run: yarn 
+       # No test added yet 
+       #- run: npm test      
       
-      # Docker test & push 
+      # Docker 
       - name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
+      - name: Build and push
         uses: docker/build-push-action@v2
         with:
           push: true
