@@ -22,6 +22,7 @@ function Login() {
     password: ''
   })
   const [formErrors, setFormErrors] = useState({})
+  const [hasErrors, setHasErrors] = useState({})
 
   const togglePasswordVisiblity = () => {
     setPasswordShown(!passwordShown)
@@ -43,6 +44,7 @@ function Login() {
 
   useEffect(() => {
     setFormErrors(LoginFormValidator(formValues))
+    setHasErrors(isObjectUndefined(formErrors))
   }, [formValues])
 
   return (
@@ -55,6 +57,7 @@ function Login() {
                 placeholder="Email"
                 id="email"
                 type="text"
+                value={formValues.email}
                 onBlur={(e) => handleEvent(e)}
                 onChange={(e) => handleEvent(e)}
                 required
@@ -64,16 +67,21 @@ function Login() {
                 placeholder="Password"
                 id="password"
                 type={passwordShown ? 'text' : 'password'}
+                value={formValues.password}
                 onBlur={(e) => handleEvent(e)}
                 onChange={(e) => handleEvent(e)}
-                rightSlot={passwordShown ? eyeOn : eyeOff}
                 required
               />
               <SmallError>{formErrors.password}</SmallError>
               <i onClick={togglePasswordVisiblity}>
                 {passwordShown ? eyeOn : eyeOff}
               </i>
-              <Button bg="#0F9D58" color="#fff" disabled={isSubmit}>
+              <Button
+                type="submit"
+                bg="#0F9D58"
+                color="#fff"
+                disabled={hasErrors || isSubmit}
+              >
                 Login
               </Button>
             </form>
