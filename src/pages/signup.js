@@ -10,15 +10,18 @@ import isObjectUndefined from '../utils/errorChecker'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
+import useAuthUser from 'global/AuthUser'
+import {useNavigate} from 'react-router-dom'
+import {SIGN_UP_MUTATION} from 'api/mutations/sign_up'
+import {useMutation} from '@apollo/client'
 const eyeOn = <FontAwesomeIcon icon={faEye} />
 const eyeOff = <FontAwesomeIcon icon={faEyeSlash} />
 
 function Signup() {
   const initialValues = {
-    username: '',
-    firstname: '',
-    lastname: '',
     email: '',
+    firstName: '',
+    lastName: '',
     password: ''
   }
   const [formValues, setFormValues] = useState(initialValues)
@@ -30,6 +33,13 @@ function Signup() {
     setPasswordShown(!passwordShown)
   }
 
+  const {dispatch, state: AuthUser} = useAuthUser()
+  const [signUp, {data}] = useMutation(SIGN_UP_MUTATION)
+
+  useEffect(() => {
+    setFormErrors(SignUpFormValidator(formValues))
+  }, [formValues])
+
   function handleEvent(event) {
     const {value, id} = event.target
     if (event.type === 'blur') {
@@ -39,14 +49,22 @@ function Signup() {
     }
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    setIsSubmit(isObjectUndefined(formErrors))
+    if (isObjectUndefined(formErrors)) {
+      setIsSubmit(true)
+      dispatch({type: 'loading'})
+      await signUp({variables: {...formValues}})
+      dispatch({type: 'loaded', payload: data})
+    }
   }
 
+  const navigate = useNavigate()
   useEffect(() => {
-    setFormErrors(SignUpFormValidator(formValues))
-  }, [formValues])
+    if (AuthUser.me) {
+      navigate('/profile', {replace: true})
+    }
+  }, [AuthUser.me, navigate])
 
   return (
     <DefaultLayout title="Sign Up">
@@ -55,32 +73,23 @@ function Signup() {
           <CardBody>
             <form onSubmit={handleSubmit}>
               <CardInput
-                placeholder="Username"
-                id="username"
-                type="text"
-                value={formValues.username}
-                onChange={(e) => handleEvent(e)}
-                required
-              />
-              <SmallError>{formErrors.username}</SmallError>
-              <CardInput
                 placeholder="First name"
-                id="firstname"
+                id="firstName"
                 type="text"
-                value={formValues.firstname}
+                value={formValues.firstName}
                 onChange={(e) => handleEvent(e)}
                 required
               />
-              <SmallError>{formErrors.firstname}</SmallError>
+              <SmallError>{formErrors.firstName}</SmallError>
               <CardInput
                 placeholder="Last name"
-                id="lastname"
+                id="lastName"
                 type="text"
-                value={formValues.lastname}
+                value={formValues.lastName}
                 onChange={(e) => handleEvent(e)}
                 required
               />
-              <SmallError>{formErrors.lastname}</SmallError>
+              <SmallError>{formErrors.lastName}</SmallError>
               <CardInput
                 placeholder="Email"
                 id="email"
@@ -101,7 +110,12 @@ function Signup() {
               <i onClick={togglePasswordVisibility}>
                 {passwordShown ? eyeOn : eyeOff}
               </i>
-              <Button bg="#0F9D58" color="#fff" disabled={isSubmit}>
+              <Button
+                bg="#0F9D58"
+                color="#fff"
+                type="submit"
+                disabled={isSubmit}
+              >
                 Create Account
               </Button>
             </form>

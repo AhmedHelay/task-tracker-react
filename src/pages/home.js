@@ -12,9 +12,6 @@ function Home() {
     <DefaultLayout title="Home">
       <Container>
         <CardWrapper>
-          <Button bg="#0F9D58" color="#fff" onClick={() => navigate('/')}>
-            Home
-          </Button>
           <Button bg="#0F9D58" color="#fff" onClick={() => navigate('/login')}>
             Login
           </Button>

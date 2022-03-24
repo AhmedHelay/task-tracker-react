@@ -11,6 +11,10 @@ import DefaultLayout from './../components/layouts/default_layout'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
+import useAuthUser from 'global/AuthUser'
+import {SIGN_IN_MUTATION} from 'api/mutations/sign_in'
+import {useMutation} from '@apollo/client'
+import {useNavigate} from 'react-router-dom'
 const eyeOn = <FontAwesomeIcon icon={faEye} />
 const eyeOff = <FontAwesomeIcon icon={faEyeSlash} />
 
@@ -21,12 +25,26 @@ function Login() {
     email: '',
     password: ''
   })
+
   const [formErrors, setFormErrors] = useState({})
-  const [hasErrors, setHasErrors] = useState({})
+
+  const {dispatch, state: AuthUser} = useAuthUser()
+  const [signIn, {data}] = useMutation(SIGN_IN_MUTATION)
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (AuthUser.me) {
+      navigate('/profile', {replace: true})
+    }
+  }, [AuthUser.me, navigate])
 
   const togglePasswordVisiblity = () => {
     setPasswordShown(!passwordShown)
   }
+
+  useEffect(() => {
+    setFormErrors(LoginFormValidator(formValues))
+  }, [formValues])
 
   function handleEvent(event) {
     const {value, id} = event.target
@@ -37,15 +55,15 @@ function Login() {
     }
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    setIsSubmit(isObjectUndefined(formErrors))
+    if (isObjectUndefined(formErrors)) {
+      setIsSubmit(true)
+      dispatch({type: 'loading'})
+      await signIn({variables: {...formValues}})
+      dispatch({type: 'loaded', payload: data})
+    }
   }
-
-  useEffect(() => {
-    setFormErrors(LoginFormValidator(formValues))
-    setHasErrors(isObjectUndefined(formErrors))
-  }, [formValues])
 
   return (
     <DefaultLayout title="Login">
@@ -80,7 +98,7 @@ function Login() {
                 type="submit"
                 bg="#0F9D58"
                 color="#fff"
-                disabled={hasErrors || isSubmit}
+                disabled={isSubmit}
               >
                 Login
               </Button>
