@@ -4,9 +4,8 @@ import {PasswordValidator} from './form_validators/password_validator'
 
 export const SignUpFormValidator = (values) => {
   const errors = {}
-  errors.username = TextFieldValidator(values.username)
-  errors.firstname = TextFieldValidator(values.firstname)
-  errors.lastname = TextFieldValidator(values.lastname)
+  errors.firstname = TextFieldValidator(values.firstName)
+  errors.lastname = TextFieldValidator(values.lastName)
   errors.email = EmailValidator(values.email)
   errors.password = PasswordValidator(values.password)
   return errors
