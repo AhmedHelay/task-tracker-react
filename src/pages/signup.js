@@ -6,7 +6,6 @@ import {SmallError} from '../components/styles/small_error_message.styled'
 import {CardWrapper, CardBody, CardInput} from '../components/styles/card'
 import DefaultLayout from './../components/layouts/default_layout'
 import {SignUpFormValidator} from '../validators/signup_form_validator'
-import isObjectUndefined from '../utils/errorChecker'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
@@ -14,6 +13,7 @@ import useAuthUser from 'global/AuthUser'
 import {useNavigate} from 'react-router-dom'
 import {SIGN_UP_MUTATION} from 'api/mutations/sign_up'
 import {useMutation} from '@apollo/client'
+import isStateFilled from 'utils/errorChecker'
 const eyeOn = <FontAwesomeIcon icon={faEye} />
 const eyeOff = <FontAwesomeIcon icon={faEyeSlash} />
 
@@ -51,7 +51,7 @@ function Signup() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (isObjectUndefined(formErrors)) {
+    if (isStateFilled(formErrors)) {
       setIsSubmit(true)
       dispatch({type: 'loading'})
       await signUp({variables: {...formValues}})

@@ -5,7 +5,6 @@ import {Button} from './../components/styles/button.styled'
 import {CardWrapper, CardBody, CardInput} from './../components/styles/card'
 import {SmallError} from '../components/styles/small_error_message.styled'
 import {LoginFormValidator} from '../validators/login_form_validator'
-import isObjectUndefined from '../utils/errorChecker'
 
 import DefaultLayout from './../components/layouts/default_layout'
 
@@ -15,6 +14,7 @@ import useAuthUser from 'global/AuthUser'
 import {SIGN_IN_MUTATION} from 'api/mutations/sign_in'
 import {useMutation} from '@apollo/client'
 import {useNavigate} from 'react-router-dom'
+import isStateFilled from '../utils/errorChecker'
 const eyeOn = <FontAwesomeIcon icon={faEye} />
 const eyeOff = <FontAwesomeIcon icon={faEyeSlash} />
 
@@ -57,7 +57,7 @@ function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (isObjectUndefined(formErrors)) {
+    if (isStateFilled(formErrors)) {
       setIsSubmit(true)
       dispatch({type: 'loading'})
       await signIn({variables: {...formValues}})

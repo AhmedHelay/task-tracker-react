@@ -1,7 +1,5 @@
-export default function isObjectUndefined(obj) {
-  let state = true
-  Object.keys(obj).forEach((key) => {
-    if (obj[key] !== undefined) state = false
+export default function isStateFilled(obj) {
+  return !Object.keys(obj).some((key) => {
+    return !!obj[key] === false
   })
-  return state
 }
