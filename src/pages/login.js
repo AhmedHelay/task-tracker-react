@@ -29,7 +29,11 @@ function Login() {
   })
 
   const {dispatch, state: AuthUser} = useAuthUser()
-  const [LoginMutation, {data, error, loading}] = useMutation(SIGN_IN_MUTATION)
+  const [LoginMutation] = useMutation(SIGN_IN_MUTATION, {
+    onCompleted: (data) => {
+      dispatch({type: 'loaded', payload: data})
+    }
+  })
 
   const togglePasswordVisiblity = () => {
     setPasswordShown(!passwordShown)
@@ -55,7 +59,6 @@ function Login() {
       dispatch({type: 'loading'})
       try {
         await LoginMutation({variables: {...formValues}})
-        dispatch({type: 'loaded', payload: data})
       } catch (e) {
         setLoginError(e.message)
         setIsSubmit(false)
@@ -75,8 +78,6 @@ function Login() {
       <Container>
         <CardWrapper>
           <CardBody>
-            {error}
-            {loading}
             <form onSubmit={handleSubmit}>
               <SmallError>{loginError}</SmallError>
               <CardInput
