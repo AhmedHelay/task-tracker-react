@@ -1,12 +1,12 @@
 import {useState, useEffect} from 'react'
 
-import {Container} from './../components/styles/container.styled'
-import {Button} from './../components/styles/button.styled'
-import {CardWrapper, CardBody, CardInput} from './../components/styles/card'
+import {Container} from 'components/styles/container.styled'
+import {Button} from 'components/styles/button.styled'
+import {CardWrapper, CardBody, CardInput} from 'components/styles/card'
 import {SmallError} from '../components/styles/small_error_message.styled'
 import {LoginFormValidator} from '../validators/login_form_validator'
 
-import DefaultLayout from './../components/layouts/default_layout'
+import DefaultLayout from 'components/layouts/default_layout'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
@@ -14,29 +14,22 @@ import useAuthUser from 'global/AuthUser'
 import {SIGN_IN_MUTATION} from 'api/mutations/sign_in'
 import {useMutation} from '@apollo/client'
 import {useNavigate} from 'react-router-dom'
-import isStateFilled from '../utils/errorChecker'
+import isErrorStateEmpty from 'utils/errorChecker'
 const eyeOn = <FontAwesomeIcon icon={faEye} />
 const eyeOff = <FontAwesomeIcon icon={faEyeSlash} />
 
 function Login() {
   const [passwordShown, setPasswordShown] = useState(false)
   const [isSubmit, setIsSubmit] = useState(false)
+  const [formErrors, setFormErrors] = useState({})
+  const [loginError, setLoginError] = useState('')
   const [formValues, setFormValues] = useState({
     email: '',
     password: ''
   })
 
-  const [formErrors, setFormErrors] = useState({})
-
   const {dispatch, state: AuthUser} = useAuthUser()
-  const [signIn, {data}] = useMutation(SIGN_IN_MUTATION)
-
-  const navigate = useNavigate()
-  useEffect(() => {
-    if (AuthUser.me) {
-      navigate('/profile', {replace: true})
-    }
-  }, [AuthUser.me, navigate])
+  const [LoginMutation, {data, error, loading}] = useMutation(SIGN_IN_MUTATION)
 
   const togglePasswordVisiblity = () => {
     setPasswordShown(!passwordShown)
@@ -57,20 +50,35 @@ function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (isStateFilled(formErrors)) {
+    if (isErrorStateEmpty(formErrors)) {
       setIsSubmit(true)
       dispatch({type: 'loading'})
-      await signIn({variables: {...formValues}})
-      dispatch({type: 'loaded', payload: data})
+      try {
+        await LoginMutation({variables: {...formValues}})
+        dispatch({type: 'loaded', payload: data})
+      } catch (e) {
+        setLoginError(e.message)
+        setIsSubmit(false)
+      }
     }
   }
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (AuthUser.me) {
+      navigate('/', {replace: true})
+    }
+  }, [AuthUser.me, navigate])
 
   return (
     <DefaultLayout title="Login">
       <Container>
         <CardWrapper>
           <CardBody>
+            {error}
+            {loading}
             <form onSubmit={handleSubmit}>
+              <SmallError>{loginError}</SmallError>
               <CardInput
                 placeholder="Email"
                 id="email"

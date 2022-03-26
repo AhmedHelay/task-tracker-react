@@ -63,7 +63,11 @@ export function AuthUser({children}) {
     [client]
   )
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>
+  return (
+    <UserContext.Provider client={client} value={value}>
+      {children}
+    </UserContext.Provider>
+  )
 }
 
 export default function useAuthUser() {
