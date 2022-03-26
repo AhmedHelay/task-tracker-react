@@ -1,5 +1,5 @@
-export default function isStateFilled(obj) {
+export default function isErrorStateEmpty(obj) {
   return !Object.keys(obj).some((key) => {
-    return !!obj[key] === false
+    return !!obj[key] === true
   })
 }
