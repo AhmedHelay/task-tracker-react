@@ -25,7 +25,7 @@ function Home() {
           <Button
             bg="#0F9D58"
             color="#fff"
-            onClick={() => navigate('/Registration')}
+            onClick={() => navigate('/registration')}
           >
             Registration
           </Button>
