@@ -1,11 +1,11 @@
 import {useEffect, useState} from 'react'
 
-import {Container} from '../components/styles/container.styled'
-import {Button} from '../components/styles/button.styled'
-import {SmallError} from '../components/styles/small_error_message.styled'
+import {Container} from 'components/styles/container.styled'
+import {Button} from 'components/styles/button.styled'
+import {SmallError} from 'components/styles/small_error_message.styled'
 import {CardWrapper, CardBody, CardInput} from '../components/styles/card'
-import DefaultLayout from './../components/layouts/default_layout'
-import {SignUpFormValidator} from '../validators/signup_form_validator'
+import DefaultLayout from 'components/layouts/default_layout'
+import {RegistrationFormValidator} from 'validators/registration_form_validator'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
@@ -13,31 +13,32 @@ import useAuthUser from 'global/AuthUser'
 import {useNavigate} from 'react-router-dom'
 import {SIGN_UP_MUTATION} from 'api/mutations/sign_up'
 import {useMutation} from '@apollo/client'
-import isStateFilled from 'utils/errorChecker'
+import isErrorStateEmpty from 'utils/errorChecker'
 const eyeOn = <FontAwesomeIcon icon={faEye} />
 const eyeOff = <FontAwesomeIcon icon={faEyeSlash} />
 
-function Signup() {
+function Registration() {
   const initialValues = {
     email: '',
     firstName: '',
     lastName: '',
     password: ''
   }
+  const [passwordShown, setPasswordShown] = useState(false)
   const [formValues, setFormValues] = useState(initialValues)
   const [formErrors, setFormErrors] = useState({})
+  const [registrationError, setRegistrationError] = useState('')
   const [isSubmit, setIsSubmit] = useState(false)
-
-  const [passwordShown, setPasswordShown] = useState(false)
-  const togglePasswordVisibility = () => {
-    setPasswordShown(!passwordShown)
-  }
 
   const {dispatch, state: AuthUser} = useAuthUser()
   const [signUp, {data}] = useMutation(SIGN_UP_MUTATION)
 
+  const togglePasswordVisibility = () => {
+    setPasswordShown(!passwordShown)
+  }
+
   useEffect(() => {
-    setFormErrors(SignUpFormValidator(formValues))
+    setFormErrors(RegistrationFormValidator(formValues))
   }, [formValues])
 
   function handleEvent(event) {
@@ -51,18 +52,23 @@ function Signup() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (isStateFilled(formErrors)) {
+    if (isErrorStateEmpty(formErrors)) {
       setIsSubmit(true)
       dispatch({type: 'loading'})
-      await signUp({variables: {...formValues}})
-      dispatch({type: 'loaded', payload: data})
+      try {
+        await signUp({variables: {...formValues}})
+        dispatch({type: 'loaded', payload: data})
+      } catch (e) {
+        setRegistrationError(e.extensions.detail)
+        setIsSubmit(false)
+      }
     }
   }
 
   const navigate = useNavigate()
   useEffect(() => {
     if (AuthUser.me) {
-      navigate('/profile', {replace: true})
+      navigate('/', {replace: true})
     }
   }, [AuthUser.me, navigate])
 
@@ -72,6 +78,7 @@ function Signup() {
         <CardWrapper>
           <CardBody>
             <form onSubmit={handleSubmit}>
+              <SmallError>{registrationError}</SmallError>
               <CardInput
                 placeholder="First name"
                 id="firstName"
@@ -126,4 +133,4 @@ function Signup() {
   )
 }
 
-export default Signup
+export default Registration
