@@ -1,6 +1,6 @@
 import {ApolloClient, createHttpLink, InMemoryCache} from '@apollo/client'
 import {setContext} from '@apollo/client/link/context'
-import {ACCESS_TOKEN} from './../constants/tokens.js'
+import {ACCESS_TOKEN} from 'constants/tokens'
 
 const httpLink = createHttpLink({
   uri: `${process.env.REACT_APP_API_URL}/graphql`
