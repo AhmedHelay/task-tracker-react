@@ -36,7 +36,7 @@ export const CardInput = styled.input`
   border-right: 0;
   border-bottom: 1px solid #ddd;
   border-left: 0;
-  border-radius: 20px;
+  border-radius: 5px;
   display: inline-block;
   position: relative;
   transition: border-bottom-color 0.25s ease-in;

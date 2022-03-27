@@ -12,13 +12,13 @@ export const Button = styled.button`
   background-color: ${({bg}) => bg || '#fff'};
   color: ${({color}) => color || '#333'};
   border: 0;
-  border-radius: 35px;
+  border-radius: 7px;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
 
   &:hover {
-    box-shadow: 0 15px 15px rgba(0, 0, 0, 0.16);
-    transform: translate(0, -5px);
+    background-color: black;
+    color: white;
   }
 `
