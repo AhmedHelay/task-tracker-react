@@ -8,26 +8,26 @@ import useAuthUser from 'global/AuthUser'
 
 function Home() {
   const navigate = useNavigate()
-  const {state: AuthUser} = useAuthUser()
+  const {
+    state: {user, isLoading}
+  } = useAuthUser()
+
+  function handleLogout() {
+    localStorage.clear()
+    navigate('/login')
+  }
   useEffect(() => {
-    if (!!AuthUser.me === false) {
-      navigate('/login', {replace: true})
+    if (isLoading === false && !user) {
+      navigate('/login')
     }
-  }, [AuthUser, navigate])
+  }, [user, isLoading, navigate])
 
   return (
     <DefaultLayout title="Home">
       <Container>
         <CardWrapper>
-          <Button bg="#0F9D58" color="#fff" onClick={() => navigate('/login')}>
-            Login
-          </Button>
-          <Button
-            bg="#0F9D58"
-            color="#fff"
-            onClick={() => navigate('/registration')}
-          >
-            Registration
+          <Button bg="#DB4437" color="#fff" onClick={() => handleLogout()}>
+            Logout
           </Button>
         </CardWrapper>
       </Container>

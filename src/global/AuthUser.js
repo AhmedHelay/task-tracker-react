@@ -5,12 +5,12 @@ import React, {
   useMemo,
   useReducer
 } from 'react'
-import {useApolloClient} from '@apollo/client'
+import {useQuery} from '@apollo/client'
 
 import {ACCESS_TOKEN, REFRESH_TOKEN} from 'constants/tokens'
 import {USER_ME_QUERY} from 'api/query/current_user'
 
-const INITIAL_STATE = {user: null, isLoading: null}
+const INITIAL_STATE = {user: null, isLoading: false}
 
 const UserContext = createContext()
 function reducer(state, action) {
@@ -24,7 +24,7 @@ function reducer(state, action) {
       localStorage.setItem(ACCESS_TOKEN, action.payload.accessToken)
       localStorage.setItem(REFRESH_TOKEN, action.payload.refreshToken)
       return {
-        user: action.payload.me,
+        user: action.payload.data,
         isLoading: false
       }
     case 'logout':
@@ -38,36 +38,26 @@ function reducer(state, action) {
 
 export function AuthUser({children}) {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
-  const client = useApolloClient()
+  const {data} = useQuery(USER_ME_QUERY)
   const value = useMemo(() => ({state, dispatch}), [state])
-  useEffect(
-    () =>
-      async function getUser() {
-        const accessToken = localStorage.getItem(ACCESS_TOKEN)
-        const refreshToken = localStorage.getItem(REFRESH_TOKEN)
-        if (!!accessToken && !!refreshToken) {
-          dispatch({type: 'loading'})
-          const {
-            data: {me}
-          } = await client.query({query: USER_ME_QUERY})
-          dispatch({
-            type: 'loaded',
-            payload: {
-              me,
-              refreshToken,
-              accessToken
-            }
-          })
-        }
-      },
-    [client]
-  )
 
-  return (
-    <UserContext.Provider client={client} value={value}>
-      {children}
-    </UserContext.Provider>
-  )
+  useEffect(() => {
+    const accessToken = localStorage.getItem(ACCESS_TOKEN)
+    const refreshToken = localStorage.getItem(REFRESH_TOKEN)
+    if (!!accessToken && !!refreshToken) {
+      dispatch({type: 'loading'})
+      dispatch({
+        type: 'loaded',
+        payload: {
+          data,
+          refreshToken,
+          accessToken
+        }
+      })
+    }
+  }, [data])
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
 
 export default function useAuthUser() {
