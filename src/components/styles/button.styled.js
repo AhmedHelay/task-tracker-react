@@ -18,7 +18,7 @@ export const Button = styled.button`
   transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
 
   &:hover {
-    background-color: black;
+    background-color: ${({hbg}) => hbg || 'green'};
     color: white;
   }
 `
