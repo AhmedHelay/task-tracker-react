@@ -37,7 +37,7 @@ function Registration() {
   } = useAuthUser()
   const [signUpMutation] = useMutation(SIGN_UP_MUTATION, {
     onCompleted: (data) => {
-      dispatch({type: 'loaded', payload: data})
+      dispatch({type: 'loaded', payload: data.signup})
     }
   })
 
@@ -64,7 +64,7 @@ function Registration() {
 
   const navigate = useNavigate()
   useEffect(() => {
-    if (isLoading === false && !user) {
+    if (isLoading === false && user) {
       navigate('/', {replace: true})
     }
   }, [user, isLoading, navigate])

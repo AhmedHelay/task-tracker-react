@@ -62,7 +62,7 @@ function Login() {
 
   const navigate = useNavigate()
   useEffect(() => {
-    if (isLoading === false && !user) {
+    if (isLoading === false && user) {
       navigate('/', {replace: true})
     }
   }, [user, isLoading, navigate])
@@ -92,6 +92,7 @@ function Login() {
                 error={errorsState.password}
                 onBlur={(e) => handleEvent(e)}
                 onChange={(e) => handleEvent(e)}
+                autoComplete="off"
                 required
               />
               <SmallError>{errorsState.password}</SmallError>

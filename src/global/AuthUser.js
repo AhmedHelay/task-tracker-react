@@ -17,14 +17,14 @@ function reducer(state, action) {
   switch (action.type) {
     case 'loading':
       return {
-        ...state,
+        user: state.user,
         isLoading: true
       }
     case 'loaded':
       localStorage.setItem(ACCESS_TOKEN, action.payload.accessToken)
       localStorage.setItem(REFRESH_TOKEN, action.payload.refreshToken)
       return {
-        user: action.payload.data,
+        user: action.payload.me,
         isLoading: false
       }
     case 'logout':
@@ -38,7 +38,7 @@ function reducer(state, action) {
 
 export function AuthUser({children}) {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
-  const {data} = useQuery(USER_ME_QUERY)
+  const {data: me} = useQuery(USER_ME_QUERY)
   const value = useMemo(() => ({state, dispatch}), [state])
 
   useEffect(() => {
@@ -49,13 +49,13 @@ export function AuthUser({children}) {
       dispatch({
         type: 'loaded',
         payload: {
-          data,
+          me,
           refreshToken,
           accessToken
         }
       })
     }
-  }, [data])
+  }, [me])
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }

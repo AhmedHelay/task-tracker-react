@@ -9,13 +9,15 @@ import useAuthUser from 'global/AuthUser'
 function Home() {
   const navigate = useNavigate()
   const {
-    state: {user, isLoading}
+    state: {user, isLoading},
+    dispatch
   } = useAuthUser()
 
   function handleLogout() {
-    localStorage.clear()
-    navigate('/login')
+    dispatch({type: 'logout'})
+    navigate('/login', {replace: true})
   }
+
   useEffect(() => {
     if (isLoading === false && !user) {
       navigate('/login')
@@ -26,7 +28,12 @@ function Home() {
     <DefaultLayout title="Home">
       <Container>
         <CardWrapper>
-          <Button bg="#DB4437" color="#fff" onClick={() => handleLogout()}>
+          <Button
+            bg="#DB4437"
+            hbg="red"
+            color="#fff"
+            onClick={() => handleLogout()}
+          >
             Logout
           </Button>
         </CardWrapper>
