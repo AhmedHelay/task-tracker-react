@@ -14,7 +14,7 @@ import useAuthUser from 'global/AuthUser'
 import {useNavigate} from 'react-router-dom'
 import {SIGN_UP_MUTATION} from 'api/mutations/sign_up'
 import {useMutation} from '@apollo/client'
-import isErrorStateEmpty from 'utils/forms/errorChecker'
+import StateEmpty from 'utils/forms/state_empty'
 import {handleFormChange} from 'utils/forms/handleChange'
 const eyeOn = <FontAwesomeIcon icon={faEye} />
 const eyeOff = <FontAwesomeIcon icon={faEyeSlash} />
@@ -55,7 +55,7 @@ function Registration() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (isErrorStateEmpty(formErrors)) {
+    if (StateEmpty(formErrors)) {
       setIsSubmit(true)
       dispatch({type: 'loading'})
       await signUpMutation({variables: {...formValues}})

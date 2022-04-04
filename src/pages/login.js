@@ -14,7 +14,7 @@ import useAuthUser from 'global/AuthUser'
 import {SIGN_IN_MUTATION} from 'api/mutations/sign_in'
 import {useMutation} from '@apollo/client'
 import {useNavigate} from 'react-router-dom'
-import isErrorStateEmpty from 'utils/forms/errorChecker'
+import StateEmpty from 'utils/forms/state_empty'
 import {handleFormChange} from 'utils/forms/handleChange'
 import {SmallError} from 'components/styles/small_error_message.styled'
 const eyeOn = <FontAwesomeIcon icon={faEye} />
@@ -53,7 +53,7 @@ function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (isErrorStateEmpty(errorsState)) {
+    if (StateEmpty(errorsState)) {
       setIsSubmit(true)
       dispatch({type: 'loading'})
       await LoginMutation({variables: {...formState}})
