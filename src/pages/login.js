@@ -39,7 +39,7 @@ function Login() {
     }
   })
 
-  const togglePasswordVisiblity = () => {
+  const togglePasswordVisibility = () => {
     setPasswordShown(!passwordShown)
   }
 
@@ -96,7 +96,7 @@ function Login() {
                 required
               />
               <SmallError>{errorsState.password}</SmallError>
-              <i onClick={togglePasswordVisiblity}>
+              <i onClick={togglePasswordVisibility}>
                 {passwordShown ? eyeOn : eyeOff}
               </i>
               <Button
