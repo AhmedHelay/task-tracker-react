@@ -8,7 +8,7 @@ import React, {
 import {useQuery} from '@apollo/client'
 
 import {ACCESS_TOKEN, REFRESH_TOKEN} from 'constants/tokens'
-import {USER_ME_QUERY} from 'api/query/current_user'
+import {USER_ME_QUERY} from 'api/query/currentUser'
 
 const INITIAL_STATE = {user: null, isLoading: false}
 

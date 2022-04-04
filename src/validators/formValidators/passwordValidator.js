@@ -1,7 +1,8 @@
-export const PasswordValidator = (password) => {
-  const numRegex = new RegExp('\\d+')
-  const letterRegex = new RegExp('[a-zA-Z]+')
-  const bigLettersRegex = new RegExp('[A-Z]')
+const numRegex = /\\d+/
+const letterRegex = /[a-zA-Z]+/
+const bigLettersRegex = /[A-Z]/
+
+export const passwordValidator = (password) => {
   if (password === '') return
   if (!numRegex.test(password)) return 'Password must contains numbers'
   if (!letterRegex.test(password)) return 'Password must contains letters'

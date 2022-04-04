@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import DefaultLayout from './../components/layouts/default_layout'
+import DefaultLayout from '../components/layouts/defaultLayout'
 import {useNavigate} from 'react-router-dom'
 import {Button} from 'components/styles/button.styled'
 import {Container} from 'components/styles/container.styled'

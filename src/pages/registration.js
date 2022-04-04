@@ -2,34 +2,34 @@ import {useEffect, useState} from 'react'
 
 import {Container} from 'components/styles/container.styled'
 import {Button} from 'components/styles/button.styled'
-import {SmallError} from 'components/styles/small_error_message.styled'
+import {SmallError} from 'components/styles/smallErrorMessage.styled'
 import {CardWrapper, CardBody} from 'components/styles/card'
-import {FormInput} from 'components/styles/form/form_input'
-import DefaultLayout from 'components/layouts/default_layout'
-import {RegistrationFormValidator} from 'validators/registration_form_validator'
+import {FormInput} from 'components/styles/form/formInput'
+import DefaultLayout from 'components/layouts/defaultLayout'
+import {registrationFormValidator} from 'validators/registrationFormValidator'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
 import useAuthUser from 'global/AuthUser'
 import {useNavigate} from 'react-router-dom'
-import {SIGN_UP_MUTATION} from 'api/mutations/sign_up'
+import {SIGN_UP_MUTATION} from 'api/mutations/signUp'
 import {useMutation} from '@apollo/client'
-import StateEmpty from 'utils/forms/state_empty'
+import isEmptyState from 'utils/forms/isEmptyState'
 import {handleFormChange} from 'utils/forms/handleChange'
 const eyeOn = <FontAwesomeIcon icon={faEye} />
 const eyeOff = <FontAwesomeIcon icon={faEyeSlash} />
 
+const INITIAL_VALUES = {
+  email: '',
+  firstName: '',
+  lastName: '',
+  password: ''
+}
+
 function Registration() {
-  const initialValues = {
-    email: '',
-    firstName: '',
-    lastName: '',
-    password: ''
-  }
   const [passwordShown, setPasswordShown] = useState(false)
-  const [formValues, setFormValues] = useState(initialValues)
+  const [formValues, setFormValues] = useState(INITIAL_VALUES)
   const [formErrors, setFormErrors] = useState({})
-  const [isSubmit, setIsSubmit] = useState(false)
 
   const {
     state: {user, isLoading},
@@ -46,7 +46,7 @@ function Registration() {
   }
 
   useEffect(() => {
-    setFormErrors(RegistrationFormValidator(formValues))
+    setFormErrors(registrationFormValidator(formValues))
   }, [formValues])
 
   function handleEvent(event) {
@@ -55,10 +55,9 @@ function Registration() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (StateEmpty(formErrors)) {
-      setIsSubmit(true)
+    if (isEmptyState(formErrors)) {
       dispatch({type: 'loading'})
-      await signUpMutation({variables: {...formValues}})
+      await signUpMutation({variables: formValues})
     }
   }
 
@@ -117,7 +116,7 @@ function Registration() {
                 bg="#0F9D58"
                 color="#fff"
                 type="submit"
-                disabled={isSubmit}
+                disabled={isLoading}
               >
                 Create Account
               </Button>

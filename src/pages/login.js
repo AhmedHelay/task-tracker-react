@@ -3,26 +3,25 @@ import {useState, useEffect} from 'react'
 import {Container} from 'components/styles/container.styled'
 import {Button} from 'components/styles/button.styled'
 import {CardWrapper, CardBody} from 'components/styles/card'
-import {FormInput} from 'components/styles/form/form_input'
-import {LoginFormValidator} from '../validators/login_form_validator'
+import {FormInput} from 'components/styles/form/formInput'
+import {loginFormValidator} from '../validators/loginFormValidator'
 
-import DefaultLayout from 'components/layouts/default_layout'
+import DefaultLayout from 'components/layouts/defaultLayout'
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
 import useAuthUser from 'global/AuthUser'
-import {SIGN_IN_MUTATION} from 'api/mutations/sign_in'
+import {SIGN_IN_MUTATION} from 'api/mutations/signIn'
 import {useMutation} from '@apollo/client'
 import {useNavigate} from 'react-router-dom'
-import StateEmpty from 'utils/forms/state_empty'
+import isEmptyState from 'utils/forms/isEmptyState'
 import {handleFormChange} from 'utils/forms/handleChange'
-import {SmallError} from 'components/styles/small_error_message.styled'
+import {SmallError} from 'components/styles/smallErrorMessage.styled'
 const eyeOn = <FontAwesomeIcon icon={faEye} />
 const eyeOff = <FontAwesomeIcon icon={faEyeSlash} />
 
 function Login() {
   const [passwordShown, setPasswordShown] = useState(false)
-  const [isSubmit, setIsSubmit] = useState(false)
   const [errorsState, setErrorsState] = useState({})
   const [formState, setFormState] = useState({
     email: '',
@@ -44,7 +43,7 @@ function Login() {
   }
 
   useEffect(() => {
-    setErrorsState(LoginFormValidator(formState))
+    setErrorsState(loginFormValidator(formState))
   }, [formState])
 
   function handleEvent(event) {
@@ -53,8 +52,7 @@ function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (StateEmpty(errorsState)) {
-      setIsSubmit(true)
+    if (isEmptyState(errorsState)) {
       dispatch({type: 'loading'})
       await LoginMutation({variables: {...formState}})
     }
@@ -103,7 +101,7 @@ function Login() {
                 type="submit"
                 bg="#0F9D58"
                 color="#fff"
-                disabled={isSubmit}
+                disabled={isLoading}
               >
                 Login
               </Button>
