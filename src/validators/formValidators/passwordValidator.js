@@ -1,4 +1,4 @@
-const numRegex = /\\d+/
+const numRegex = /\d+/
 const letterRegex = /[a-zA-Z]+/
 const bigLettersRegex = /[A-Z]/
 
