@@ -46,3 +46,12 @@ export const CardInput = styled.input`
     outline: 0;
   }
 `
+
+export const InputError = styled.p`
+  color: red;
+  font-size: small;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-top: -5px;
+  text-align: center;
+`

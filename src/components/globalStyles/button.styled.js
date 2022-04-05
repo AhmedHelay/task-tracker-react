@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const Button = styled.button`
+export const StyledButton = styled.button`
   margin-top: 15px;
   margin-left: 10px;
   display: block;

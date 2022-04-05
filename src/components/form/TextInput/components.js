@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const FormInput = styled.input`
+export const FormTextInput = styled.input`
   padding: 10px;
   margin-bottom: 10px;
   width: 100%;
