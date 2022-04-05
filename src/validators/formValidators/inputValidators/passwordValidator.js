@@ -1,4 +1,4 @@
-export const PasswordValidator = (password) => {
+export default function passwordValidator(password) {
   const numRegex = new RegExp('\\d+')
   const letterRegex = new RegExp('[a-zA-Z]+')
   const bigLettersRegex = new RegExp('[A-Z]')
