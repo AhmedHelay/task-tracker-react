@@ -1,14 +1,10 @@
 import React from 'react'
 
-import {Header, HeaderTitle, AppName, Content} from './components'
+import {Content} from './components'
 
-export default function FormLayout({title, children}) {
+export default function FormLayout({children}) {
   return (
     <Content>
-      <Header>
-        <HeaderTitle>{title}</HeaderTitle>
-        <AppName>Task tracker</AppName>
-      </Header>
       <main>{children}</main>
     </Content>
   )

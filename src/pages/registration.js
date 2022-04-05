@@ -12,7 +12,7 @@ import PasswordInput from 'components/form/PasswordInput'
 import Button from 'components/form/Button'
 
 import checkEmptyState from 'utils/forms/checkEmptyState'
-import registrationFormValidator from 'validators/registrationFormValidator'
+import registrationFormValidator from 'validators/formValidators/registrationFormValidator'
 import handleFormChange from 'utils/forms/handleChange'
 
 export default function Registration() {

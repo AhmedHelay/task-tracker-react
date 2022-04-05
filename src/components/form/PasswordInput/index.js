@@ -18,7 +18,7 @@ import React from 'react'
 // const eyeOn = <FontAwesomeIcon icon={faEye} />
 // const eyeOff = <FontAwesomeIcon icon={faEyeSlash} />
 
-export function PasswordInput() {
+export default function PasswordInput() {
   return (
     <div>
       <div>PasswordInput</div>
