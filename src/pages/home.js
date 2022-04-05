@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react'
-import DefaultLayout from './../components/layouts/default_layout'
-import {useNavigate} from 'react-router-dom'
-import {Button} from 'components/styles/button.styled'
-import {Container} from 'components/styles/container.styled'
-import {CardWrapper} from 'components/styles/card'
+
 import useAuthUser from 'global/AuthUser'
+import {useNavigate} from 'react-router-dom'
+
+import DefaultLayout from 'components/layouts/DefaultLayout'
+import Button from 'components/form/Button'
 
 function Home() {
   const navigate = useNavigate()
@@ -26,18 +26,14 @@ function Home() {
 
   return (
     <DefaultLayout title="Home">
-      <Container>
-        <CardWrapper>
-          <Button
-            bg="#DB4437"
-            hbg="red"
-            color="#fff"
-            onClick={() => handleLogout()}
-          >
-            Logout
-          </Button>
-        </CardWrapper>
-      </Container>
+      <Button
+        bg="#DB4437"
+        hbg="red"
+        color="#fff"
+        onClick={() => handleLogout()}
+      >
+        Logout
+      </Button>
     </DefaultLayout>
   )
 }
