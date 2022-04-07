@@ -1,8 +1,8 @@
-import {useState, useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 
 import useAuthUser from 'global/AuthUser'
-import {SIGN_IN_MUTATION} from 'api/mutations/signIn'
+import {SIGN_UP_MUTATION} from 'api/mutations/signUp'
 import {useMutation} from '@apollo/client'
 
 import DefaultLayout from 'components/layouts/DefaultLayout'
@@ -12,24 +12,27 @@ import PasswordInput from 'components/form/PasswordInput'
 import {SubmitButton} from 'components/button/index'
 
 import checkEmptyState from 'utils/forms/checkEmptyState'
-import loginFormValidator from 'validators/formValidators/loginFormValidator'
+import registrationFormValidator from 'validators/formValidators/registrationFormValidator'
 import handleFormChange from 'utils/forms/handleChange'
 
-export default function Login() {
-  const [isSubmit, setIsSubmit] = useState(false)
-  const [errorsState, setErrorsState] = useState({})
-  const [formState, setFormState] = useState({
+export default function Registration() {
+  const initialValues = {
     email: '',
+    firstName: '',
+    lastName: '',
     password: ''
-  })
+  }
+  const [formState, setFormState] = useState(initialValues)
+  const [errorsState, setErrorsState] = useState({})
+  const [isSubmit, setIsSubmit] = useState(false)
 
   const {
     state: {user, isLoading},
     dispatch
   } = useAuthUser()
-  const [LoginMutation] = useMutation(SIGN_IN_MUTATION, {
+  const [signUpMutation] = useMutation(SIGN_UP_MUTATION, {
     onCompleted: (data) => {
-      dispatch({type: 'loaded', payload: data.signin})
+      dispatch({type: 'loaded', payload: data.signup})
     },
     onError: (err) => {
       console.error(err)
@@ -38,20 +41,20 @@ export default function Login() {
   })
 
   useEffect(() => {
-    setErrorsState(loginFormValidator(formState))
+    setErrorsState(registrationFormValidator(formState))
   }, [formState])
 
   function handleEvent(event) {
     handleFormChange(event, formState, setFormState)
   }
 
-  async function handleLogin(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     if (checkEmptyState(formState)) return
     if (checkEmptyState(errorsState)) {
       setIsSubmit(true)
       dispatch({type: 'loading'})
-      await LoginMutation({variables: {...formState}})
+      await signUpMutation({variables: {...formState}})
     }
   }
 
@@ -63,8 +66,30 @@ export default function Login() {
   }, [user, isLoading, navigate])
 
   return (
-    <DefaultLayout title="Login">
-      <FormLayout title="Login">
+    <DefaultLayout title="Sign Up">
+      <FormLayout title="Registration">
+        <TextInput
+          placeholder="Ahmad"
+          id="firstName"
+          label="First Name"
+          type="text"
+          value={formState.firstName}
+          error={errorsState.firstName}
+          onBlur={(e) => handleEvent(e)}
+          onChange={(e) => handleEvent(e)}
+          required
+        />
+        <TextInput
+          placeholder="Helaly"
+          id="lastName"
+          label="Last Name"
+          type="text"
+          value={formState.lastName}
+          error={errorsState.lastName}
+          onBlur={(e) => handleEvent(e)}
+          onChange={(e) => handleEvent(e)}
+          required
+        />
         <TextInput
           placeholder="Email"
           id="email"
@@ -87,8 +112,13 @@ export default function Login() {
           autoComplete="off"
           required
         />
-        <SubmitButton type="submit" disabled={isSubmit} onClick={handleLogin}>
-          Login
+        <SubmitButton
+          type="submit"
+          hover="#006bad"
+          disabled={isSubmit}
+          onClick={handleSubmit}
+        >
+          Create Account
         </SubmitButton>
       </FormLayout>
     </DefaultLayout>

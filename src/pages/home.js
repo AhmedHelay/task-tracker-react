@@ -1,28 +1,38 @@
-import React from 'react'
-import DefaultLayout from './../components/layouts/default_layout'
+import React, {useEffect} from 'react'
+
+import useAuthUser from 'global/AuthUser'
 import {useNavigate} from 'react-router-dom'
-import {Button} from './../components/styles/button.styled'
-import {Container} from './../components/styles/container.styled'
-import {CardWrapper} from './../components/styles/card'
+
+import DefaultLayout from 'components/layouts/DefaultLayout'
+import {DangerButton} from 'components/button/index'
 
 function Home() {
   const navigate = useNavigate()
+  const {
+    state: {user, isLoading},
+    dispatch
+  } = useAuthUser()
+
+  function handleLogout() {
+    dispatch({type: 'logout'})
+    navigate('/login', {replace: true})
+  }
+
+  useEffect(() => {
+    if (isLoading === false && !user) {
+      navigate('/login')
+    }
+  }, [user, isLoading, navigate])
 
   return (
     <DefaultLayout title="Home">
-      <Container>
-        <CardWrapper>
-          <Button bg="#0F9D58" color="#fff" onClick={() => navigate('/')}>
-            Home
-          </Button>
-          <Button bg="#0F9D58" color="#fff" onClick={() => navigate('/login')}>
-            Login
-          </Button>
-          <Button bg="#0F9D58" color="#fff" onClick={() => navigate('/signup')}>
-            Signup
-          </Button>
-        </CardWrapper>
-      </Container>
+      <DangerButton
+        type="button"
+        disabled={false}
+        onClick={() => handleLogout()}
+      >
+        Logout
+      </DangerButton>
     </DefaultLayout>
   )
 }

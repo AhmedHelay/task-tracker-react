@@ -1,20 +1,21 @@
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import {render} from 'react-dom'
-
-import Home from './pages/home'
-import Login from './pages/login'
-import Signup from './pages/signup'
+import {Routes, Route} from 'react-router-dom'
+import {AuthUser} from 'global/AuthUser'
+import EnvSpecificRouter from 'components/EnvSpecificRouter'
+import Home from 'pages/home'
+import Login from 'pages/login'
+import Registration from 'pages/registration'
 
 function App() {
-  render(
-    <Router>
-      <Routes>
-        <Route path={''} element={<Home />} />
-        <Route path={'/login'} element={<Login />} />
-        <Route path={'/signup'} element={<Signup />} />
-      </Routes>
-    </Router>,
-    document.getElementById('root')
+  return (
+    <AuthUser>
+      <EnvSpecificRouter>
+        <Routes>
+          <Route path={''} element={<Home />} />
+          <Route path={'/login'} element={<Login />} />
+          <Route path={'/registration'} element={<Registration />} />
+        </Routes>
+      </EnvSpecificRouter>
+    </AuthUser>
   )
 }
 
