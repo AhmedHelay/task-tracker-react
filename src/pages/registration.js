@@ -33,6 +33,10 @@ export default function Registration() {
   const [signUpMutation] = useMutation(SIGN_UP_MUTATION, {
     onCompleted: (data) => {
       dispatch({type: 'loaded', payload: data.signup})
+    },
+    onError: (err) => {
+      console.error(err)
+      setIsSubmit(false)
     }
   })
 
@@ -46,6 +50,7 @@ export default function Registration() {
 
   async function handleSubmit(e) {
     e.preventDefault()
+    if (checkEmptyState(formState)) return
     if (checkEmptyState(errorsState)) {
       setIsSubmit(true)
       dispatch({type: 'loading'})

@@ -30,6 +30,10 @@ export default function Login() {
   const [LoginMutation] = useMutation(SIGN_IN_MUTATION, {
     onCompleted: (data) => {
       dispatch({type: 'loaded', payload: data.signin})
+    },
+    onError: (err) => {
+      console.error(err)
+      setIsSubmit(false)
     }
   })
 
@@ -43,6 +47,7 @@ export default function Login() {
 
   async function handleLogin(e) {
     e.preventDefault()
+    if (checkEmptyState(formState)) return
     if (checkEmptyState(errorsState)) {
       setIsSubmit(true)
       dispatch({type: 'loading'})
