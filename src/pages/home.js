@@ -4,7 +4,7 @@ import useAuthUser from 'global/AuthUser'
 import {useNavigate} from 'react-router-dom'
 
 import DefaultLayout from 'components/layouts/DefaultLayout'
-import Button from 'components/form/Button'
+import {DangerButton} from 'components/button/index'
 
 function Home() {
   const navigate = useNavigate()
@@ -26,14 +26,13 @@ function Home() {
 
   return (
     <DefaultLayout title="Home">
-      <Button
-        bg="#DB4437"
-        hbg="red"
-        color="#fff"
+      <DangerButton
+        type="button"
+        disabled={false}
         onClick={() => handleLogout()}
       >
         Logout
-      </Button>
+      </DangerButton>
     </DefaultLayout>
   )
 }

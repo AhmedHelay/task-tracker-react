@@ -9,7 +9,7 @@ import DefaultLayout from 'components/layouts/DefaultLayout'
 import FormLayout from 'components/layouts/FormLayout'
 import TextInput from 'components/form/TextInput'
 import PasswordInput from 'components/form/PasswordInput'
-import Button from 'components/form/Button'
+import {SubmitButton} from 'components/button/index'
 
 import checkEmptyState from 'utils/forms/checkEmptyState'
 import registrationFormValidator from 'validators/formValidators/registrationFormValidator'
@@ -62,25 +62,25 @@ export default function Registration() {
 
   return (
     <DefaultLayout title="Sign Up">
-      <FormLayout>
+      <FormLayout title="Registration">
         <TextInput
-          placeholder="First name"
+          placeholder="Ahmad"
           id="firstName"
           label="First Name"
           type="text"
-          value={formState.email}
-          error={errorsState.email}
+          value={formState.firstName}
+          error={errorsState.firstName}
           onBlur={(e) => handleEvent(e)}
           onChange={(e) => handleEvent(e)}
           required
         />
         <TextInput
-          placeholder="Last name"
-          id="Last Name"
-          label="Password"
+          placeholder="Helaly"
+          id="lastName"
+          label="Last Name"
           type="text"
-          value={formState.email}
-          error={errorsState.email}
+          value={formState.lastName}
+          error={errorsState.lastName}
           onBlur={(e) => handleEvent(e)}
           onChange={(e) => handleEvent(e)}
           required
@@ -100,22 +100,21 @@ export default function Registration() {
           placeholder="Password"
           id="password"
           label="Password"
-          value={formState.email}
-          error={errorsState.email}
+          value={formState.password}
+          error={errorsState.password}
           onBlur={(e) => handleEvent(e)}
           onChange={(e) => handleEvent(e)}
           autoComplete="off"
           required
         />
-        <Button
-          bg="#0F9D58"
-          color="#fff"
+        <SubmitButton
           type="submit"
+          hover="#006bad"
           disabled={isSubmit}
           onClick={handleSubmit}
         >
           Create Account
-        </Button>
+        </SubmitButton>
       </FormLayout>
     </DefaultLayout>
   )

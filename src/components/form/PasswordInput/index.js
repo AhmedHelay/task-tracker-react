@@ -1,28 +1,30 @@
-import React from 'react'
+import React, {useState} from 'react'
+import {BaseInput} from '../BaseInput'
+import {FormTextInput} from '../TextInput/components'
+import {FormPasswordInput, Icon} from './components'
 
-// import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-// import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons'
+import eyeOn from './icons/visibility.png'
+import eyeOff from './icons/visibilityOff.png'
 
-{
-  /* <i onClick={togglePasswordVisibility}>
-{passwordShown ? eyeOn : eyeOff}
-</i> */
-}
+export default function PasswordInput({label, error, ...props}) {
+  const [passwordShown, setPasswordShown] = useState(false)
+  const togglePasswordVisibility = () => {
+    setPasswordShown(!passwordShown)
+  }
 
-// const [passwordShown, setPasswordShown] = useState(false)
-
-// const togglePasswordVisibility = () => {
-//   setPasswordShown(!passwordShown)
-// }
-
-// const eyeOn = <FontAwesomeIcon icon={faEye} />
-// const eyeOff = <FontAwesomeIcon icon={faEyeSlash} />
-
-export default function PasswordInput() {
   return (
-    <div>
-      <div>PasswordInput</div>
-      <div>PasswordInput</div>
-    </div>
+    <>
+      <BaseInput label={label} error={error}>
+        <FormPasswordInput {...props}>
+          <FormTextInput
+            {...props}
+            type={passwordShown ? 'text' : 'password'}
+          ></FormTextInput>
+          <Icon onClick={togglePasswordVisibility}>
+            {passwordShown ? <img src={eyeOn} /> : <img src={eyeOff} />}
+          </Icon>
+        </FormPasswordInput>
+      </BaseInput>
+    </>
   )
 }

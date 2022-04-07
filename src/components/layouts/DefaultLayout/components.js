@@ -6,7 +6,7 @@ export const Header = styled.header`
   justify-content: space-between;
   padding: 1.5em;
 
-  background-color: #4285f4;
+  background-color: #15172b;
 `
 
 export const HeaderTitle = styled.h1`
@@ -20,6 +20,6 @@ export const AppName = styled.div`
 `
 
 export const Content = styled.div`
-  background-color: #bfd2de;
+  background-color: ##fffbf5;
   height: 100vh;
 `

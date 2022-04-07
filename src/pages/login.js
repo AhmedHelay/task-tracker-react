@@ -9,7 +9,7 @@ import DefaultLayout from 'components/layouts/DefaultLayout'
 import FormLayout from 'components/layouts/FormLayout'
 import TextInput from 'components/form/TextInput'
 import PasswordInput from 'components/form/PasswordInput'
-import Button from 'components/form/Button'
+import {SubmitButton} from 'components/button/index'
 
 import checkEmptyState from 'utils/forms/checkEmptyState'
 import loginFormValidator from 'validators/formValidators/loginFormValidator'
@@ -59,7 +59,7 @@ export default function Login() {
 
   return (
     <DefaultLayout title="Login">
-      <FormLayout>
+      <FormLayout title="Login">
         <TextInput
           placeholder="Email"
           id="email"
@@ -82,15 +82,9 @@ export default function Login() {
           autoComplete="off"
           required
         />
-        <Button
-          type="submit"
-          bg="#0F9D58"
-          color="#fff"
-          disabled={isSubmit}
-          onClick={handleLogin}
-        >
+        <SubmitButton type="submit" disabled={isSubmit} onClick={handleLogin}>
           Login
-        </Button>
+        </SubmitButton>
       </FormLayout>
     </DefaultLayout>
   )
