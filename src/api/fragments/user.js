@@ -1,7 +1,7 @@
 import {gql} from '@apollo/client'
 
 export default gql`
-  fragment UserFragment on User {
+  fragment CurrentUserFragment on CurrentUser {
     id
     email
     firstName
