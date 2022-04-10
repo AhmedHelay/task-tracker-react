@@ -3,7 +3,7 @@ import {SIGN_IN} from 'api/mutations/auth/signIn'
 import {CURRENT_USER} from 'api/query/currentUser'
 
 const useSignIn = () => {
-  const [mutation, {data, error}] = useMutation(SIGN_IN, {
+  const [mutation, {data, error, loading}] = useMutation(SIGN_IN, {
     refetchQueries: [{query: CURRENT_USER}]
   })
 
@@ -14,6 +14,7 @@ const useSignIn = () => {
   return {
     signIn,
     data,
+    loading,
     error
   }
 }

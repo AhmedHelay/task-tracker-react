@@ -3,7 +3,7 @@ import {UPDATE_TOKEN} from 'api/mutations/users/updateToken'
 import {CURRENT_USER} from 'api/query/currentUser'
 
 const useUpdateToken = () => {
-  const [mutation, {data, error}] = useMutation(UPDATE_TOKEN, {
+  const [mutation, {data, error, loading}] = useMutation(UPDATE_TOKEN, {
     refetchQueries: [{query: CURRENT_USER}]
   })
 
@@ -14,6 +14,7 @@ const useUpdateToken = () => {
   return {
     updateToken,
     data,
+    loading,
     error
   }
 }

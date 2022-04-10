@@ -3,7 +3,7 @@ import {UPDATE_PROJECT} from 'api/mutations/projects/updateProject'
 import {CURRENT_USER} from 'api/query/currentUser'
 
 const useUpdateProject = () => {
-  const [mutation, {data, error}] = useMutation(UPDATE_PROJECT, {
+  const [mutation, {data, error, loading}] = useMutation(UPDATE_PROJECT, {
     refetchQueries: [{query: CURRENT_USER}]
   })
 
@@ -14,6 +14,7 @@ const useUpdateProject = () => {
   return {
     updateProject,
     data,
+    loading,
     error
   }
 }

@@ -3,7 +3,7 @@ import {UPDATE_PASSWORD} from 'api/mutations/users/updatePassword'
 import {CURRENT_USER} from 'api/query/currentUser'
 
 const useUpdatePassword = () => {
-  const [mutation, {data, error}] = useMutation(UPDATE_PASSWORD, {
+  const [mutation, {data, error, loading}] = useMutation(UPDATE_PASSWORD, {
     refetchQueries: [{query: CURRENT_USER}]
   })
 
@@ -16,6 +16,7 @@ const useUpdatePassword = () => {
   return {
     updatePassword,
     data,
+    loading,
     error
   }
 }

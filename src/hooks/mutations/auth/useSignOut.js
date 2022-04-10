@@ -3,7 +3,7 @@ import {SIGN_OUT} from 'api/mutations/auth/signOut'
 import {CURRENT_USER} from 'api/query/currentUser'
 
 const useSignOut = () => {
-  const [mutation, {data, error}] = useMutation(SIGN_OUT, {
+  const [mutation, {data, error, loading}] = useMutation(SIGN_OUT, {
     refetchQueries: [{query: CURRENT_USER}]
   })
 
@@ -14,6 +14,7 @@ const useSignOut = () => {
   return {
     signOut,
     data,
+    loading,
     error
   }
 }

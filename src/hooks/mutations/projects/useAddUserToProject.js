@@ -3,7 +3,7 @@ import {ADD_USER_TO_PROJECT} from 'api/mutations/projects/addUserToProject'
 import {CURRENT_USER} from 'api/query/currentUser'
 
 const useAddUserToProject = () => {
-  const [mutation, {data, error}] = useMutation(ADD_USER_TO_PROJECT, {
+  const [mutation, {data, error, loading}] = useMutation(ADD_USER_TO_PROJECT, {
     refetchQueries: [{query: CURRENT_USER}]
   })
 
@@ -14,6 +14,7 @@ const useAddUserToProject = () => {
   return {
     addUserToProject,
     data,
+    loading,
     error
   }
 }

@@ -3,7 +3,7 @@ import {DESTROY_TASK} from 'api/mutations/tasks/destroyTask'
 import {CURRENT_USER} from 'api/query/currentUser'
 
 const useDestoryTask = () => {
-  const [mutation, {data, error}] = useMutation(DESTROY_TASK, {
+  const [mutation, {data, error, loading}] = useMutation(DESTROY_TASK, {
     refetchQueries: [{query: CURRENT_USER}]
   })
 
@@ -14,6 +14,7 @@ const useDestoryTask = () => {
   return {
     destroyTask,
     data,
+    loading,
     error
   }
 }

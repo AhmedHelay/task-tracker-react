@@ -3,7 +3,7 @@ import {CREATE_COMMENT} from 'api/mutations/comments/createComment'
 import {CURRENT_USER} from 'api/query/currentUser'
 
 const useCreateComment = () => {
-  const [mutation, {data, error}] = useMutation(CREATE_COMMENT, {
+  const [mutation, {data, error, loading}] = useMutation(CREATE_COMMENT, {
     refetchQueries: [{query: CURRENT_USER}]
   })
 
@@ -16,6 +16,7 @@ const useCreateComment = () => {
   return {
     createComment,
     data,
+    loading,
     error
   }
 }
