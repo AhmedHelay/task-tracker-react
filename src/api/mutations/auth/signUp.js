@@ -1,4 +1,5 @@
 import {gql} from '@apollo/client'
+
 export const SIGN_UP_MUTATION = gql`
   mutation signUp(
     $email: String!
@@ -16,13 +17,6 @@ export const SIGN_UP_MUTATION = gql`
     ) {
       accessToken
       refreshToken
-      me {
-        avatarUrl
-        email
-        firstName
-        id
-        lastName
-      }
     }
   }
 `
