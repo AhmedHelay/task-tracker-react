@@ -1,11 +1,7 @@
-import {gql} from '@apollo/client'
-
-export default gql`
-  fragment CurrentUserFragment on CurrentUser {
+export const USER_PARTIAL_FRAGMENT = `
     id
     email
     firstName
     lastName
     avatarUrl
-  }
 `
