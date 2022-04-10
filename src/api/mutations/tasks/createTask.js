@@ -1,7 +1,7 @@
 import {gql} from '@apollo/client'
 import taskFragment from '../../fragments/task'
 
-export const CREATE_TASK_MUTATION = gql`
+export const CREATE_TASK = gql`
   mutation createTask(
     $id: ID!
     $title: String!

@@ -4,7 +4,7 @@ import projectFragment from '../fragments/project'
 import taskFragment from '../fragments/task'
 import commentFragment from '../fragments/comment'
 
-export const CURRENT_USER_QUERY = gql`
+export const CURRENT_USER = gql`
   query currentUser {
     me {
       # user personal details
