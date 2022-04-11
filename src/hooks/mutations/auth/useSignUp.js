@@ -7,7 +7,7 @@ const useSignUp = () => {
   const [mutation, {data, error, loading}] = useMutation(SIGN_UP, {
     refetchQueries: ({
       data: {
-        Signup: {accessToken, refreshToken}
+        signup: {accessToken, refreshToken}
       }
     }) => {
       localStorage.setItem(ACCESS_TOKEN, accessToken)
