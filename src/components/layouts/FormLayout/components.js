@@ -29,3 +29,9 @@ export const FormInputscontainer = styled.div`
   position: relative;
   padding: 20px;
 `
+
+export const FormSubmitError = styled.div`
+  background-color: #eb3333;
+  color: #ffffff;
+  border-radius: 10px;
+`
