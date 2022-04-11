@@ -1,4 +1,4 @@
-import {useMutation} from '@apollo/client'
+import {useApolloClient, useMutation} from '@apollo/client'
 import {SIGN_OUT} from 'api/mutations/auth/signOut'
 import {CURRENT_USER} from 'api/query/currentUser'
 
@@ -7,7 +7,10 @@ const useSignOut = () => {
     refetchQueries: [{query: CURRENT_USER}]
   })
 
+  const client = useApolloClient()
   const signOut = async (everywhere) => {
+    localStorage.clear()
+    await client.clearStore()
     await mutation({variables: {everywhere: everywhere}})
   }
 

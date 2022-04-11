@@ -1,23 +1,21 @@
 import React, {useEffect} from 'react'
 
 import useAuthUser from 'global/AuthUser'
+import useSignOut from 'hooks/mutations/auth/useSignOut'
 import {useNavigate} from 'react-router-dom'
 
 import DefaultLayout from 'components/layouts/DefaultLayout'
 import {DangerButton} from 'components/button/index'
 
 function Home() {
-  const navigate = useNavigate()
-  const {
-    state: {user, isLoading},
-    dispatch
-  } = useAuthUser()
+  const {user, isLoading} = useAuthUser()
+  const {signOut} = useSignOut()
 
-  function handleLogout() {
-    dispatch({type: 'logout'})
-    navigate('/login', {replace: true})
+  async function handleLogout() {
+    await signOut(false)
   }
 
+  const navigate = useNavigate()
   useEffect(() => {
     if (isLoading === false && !user) {
       navigate('/login')

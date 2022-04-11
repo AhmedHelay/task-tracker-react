@@ -2,8 +2,7 @@ import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 
 import useAuthUser from 'global/AuthUser'
-import {SIGN_UP_MUTATION} from 'api/mutations/signUp'
-import {useMutation} from '@apollo/client'
+import useSignUp from 'hooks/mutations/auth/useSignUp'
 
 import DefaultLayout from 'components/layouts/DefaultLayout'
 import FormLayout from 'components/layouts/FormLayout'
@@ -26,19 +25,8 @@ export default function Registration() {
   const [errorsState, setErrorsState] = useState({})
   const [isSubmit, setIsSubmit] = useState(false)
 
-  const {
-    state: {user, isLoading},
-    dispatch
-  } = useAuthUser()
-  const [signUpMutation] = useMutation(SIGN_UP_MUTATION, {
-    onCompleted: (data) => {
-      dispatch({type: 'loaded', payload: data.signup})
-    },
-    onError: (err) => {
-      console.error(err)
-      setIsSubmit(false)
-    }
-  })
+  const {user, isLoading} = useAuthUser()
+  const {signUp} = useSignUp()
 
   useEffect(() => {
     setErrorsState(registrationFormValidator(formState))
@@ -50,11 +38,14 @@ export default function Registration() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (checkEmptyState(formState)) return
-    if (checkEmptyState(errorsState)) {
+    if (!checkEmptyState(formState) && checkEmptyState(errorsState)) {
       setIsSubmit(true)
-      dispatch({type: 'loading'})
-      await signUpMutation({variables: {...formState}})
+      await signUp(
+        formState.email,
+        formState.password,
+        formState.firstName,
+        formState.lastName
+      )
     }
   }
 
