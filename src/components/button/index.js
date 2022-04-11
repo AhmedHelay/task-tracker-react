@@ -10,7 +10,6 @@ const submitColor = '#fff'
 const submitHover = '#006db1'
 
 export function DangerButton({type, disabled, onClick, children}) {
-  console.log('in red')
   return (
     <StyledButton
       bg={dangerBg}
