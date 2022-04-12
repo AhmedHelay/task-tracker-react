@@ -1,12 +1,13 @@
 import React, {useState} from 'react'
 import {BaseInput} from '../BaseInput'
+import RedirectMessage from '../RedirectMessage'
 import {FormTextInput} from '../TextInput/components'
 import {FormPasswordInput, Icon} from './components'
 
 import eyeOn from './icons/visibility.png'
 import eyeOff from './icons/visibilityOff.png'
 
-export default function PasswordInput({label, error, ...props}) {
+export default function PasswordInput({label, error, recovery, ...props}) {
   const [passwordShown, setPasswordShown] = useState(false)
   const togglePasswordVisibility = () => {
     setPasswordShown(!passwordShown)
@@ -25,6 +26,9 @@ export default function PasswordInput({label, error, ...props}) {
           </Icon>
         </FormPasswordInput>
       </BaseInput>
+      {recovery && (
+        <RedirectMessage textAction="Forgot password?" path="/login/recovery" />
+      )}
     </>
   )
 }
