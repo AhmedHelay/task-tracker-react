@@ -13,7 +13,8 @@ const useSignIn = () => {
       localStorage.setItem(ACCESS_TOKEN, accessToken)
       localStorage.setItem(REFRESH_TOKEN, refreshToken)
       return [CURRENT_USER]
-    }
+    },
+    onError: () => {}
   })
 
   const signIn = async (email, password) => {

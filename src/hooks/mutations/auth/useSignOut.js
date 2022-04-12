@@ -11,7 +11,8 @@ const useSignOut = () => {
   const signOut = async (everywhere) => {
     localStorage.clear()
     await client.clearStore()
-    await mutation({variables: {everywhere: everywhere}})
+    if (everywhere === true)
+      await mutation({variables: {everywhere: everywhere}})
   }
 
   return {
