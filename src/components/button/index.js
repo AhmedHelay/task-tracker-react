@@ -1,21 +1,23 @@
 import React from 'react'
 import {StyledButton} from './components'
 
-const dangerBg = '#db4437'
-const dangerColor = '#000'
-const dangerHover = '#d45555'
+const submitBg = '#6400f7'
+const submitColor = '#ffffff'
+const submitHover = '#4600ad'
+const submitDisabled = '#280063'
 
-const submitBg = '#08d'
-const submitColor = '#fff'
-const submitHover = '#006db1'
+const infoBg = '#786d68'
+const infoColor = '#ffffff'
+const infoHover = '#544c49'
+const infoDisabled = '#24211f'
 
-export function DangerButton({type, disabled, onClick, children}) {
+export function SubmitButton({disabled, onClick, children}) {
   return (
     <StyledButton
-      bg={dangerBg}
-      color={dangerColor}
-      type={type}
-      hover={dangerHover}
+      bg={disabled ? submitDisabled : submitBg}
+      color={submitColor}
+      type="submit"
+      hover={disabled ? submitDisabled : submitHover}
       onClick={onClick}
       disabled={disabled}
     >
@@ -24,13 +26,13 @@ export function DangerButton({type, disabled, onClick, children}) {
   )
 }
 
-export function SubmitButton({type, disabled, onClick, children}) {
+export function InfoButton({disabled, onClick, children}) {
   return (
     <StyledButton
-      bg={submitBg}
-      color={submitColor}
-      type={type}
-      hover={submitHover}
+      bg={disabled ? infoDisabled : infoBg}
+      color={infoColor}
+      type="button"
+      hover={disabled ? infoDisabled : infoHover}
       onClick={onClick}
       disabled={disabled}
     >
