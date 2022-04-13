@@ -9,7 +9,7 @@ export const FormPageWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100vh;
+  height: 80%;
 `
 
 export const Form = styled.div`
@@ -29,7 +29,7 @@ export const FormTitle = styled.p`
   margin-bottom: 10px;
 `
 
-export const FormInputsContainer = styled.div`
+export const FormInputsContainer = styled.form`
   margin-bottom: 20px;
 `
 
