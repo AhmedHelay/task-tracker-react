@@ -3,27 +3,28 @@ import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import useSignOut from 'hooks/mutations/auth/useSignOut'
 
-import {AiFillHome} from 'react-icons/ai'
-import {FaUsers} from 'react-icons/fa'
-import {CgProfile} from 'react-icons/cg'
-import {MdOutlineLogout} from 'react-icons/md'
+import HomeIcon from '@mui/icons-material/Home'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import GroupIcon from '@mui/icons-material/Group'
+import LogoutIcon from '@mui/icons-material/Logout'
 
-import {IconContext} from 'react-icons'
-import {NavItem, NavList} from './components'
+import {NavItem, NavList, useStyles} from './components'
 
 export default function NavBar() {
+  const classes = useStyles()
+
   const NavbarData = [
     {
       path: '/',
-      icon: <AiFillHome />
+      icon: <HomeIcon className={classes.icon} />
     },
     {
       path: '/users',
-      icon: <FaUsers />
+      icon: <GroupIcon className={classes.icon} />
     },
     {
       path: '/profile',
-      icon: <CgProfile />
+      icon: <AccountCircleIcon className={classes.icon} />
     }
   ]
 
@@ -39,17 +40,17 @@ export default function NavBar() {
   }
 
   return (
-    <IconContext.Provider value={{color: '#fff'}}>
-      <NavList>
-        {NavbarData.map((item, index) => {
-          return (
-            <NavItem key={index} onClick={() => handleNavigate(item.path)}>
-              {item.icon}
-            </NavItem>
-          )
-        })}
-        <NavItem onClick={() => handleSignOut()}>{<MdOutlineLogout />}</NavItem>
-      </NavList>
-    </IconContext.Provider>
+    <NavList>
+      {NavbarData.map((item, index) => {
+        return (
+          <NavItem key={index} onClick={() => handleNavigate(item.path)}>
+            {item.icon}
+          </NavItem>
+        )
+      })}
+      <NavItem onClick={() => handleSignOut()}>
+        {<LogoutIcon className={classes.icon} />}
+      </NavItem>
+    </NavList>
   )
 }
