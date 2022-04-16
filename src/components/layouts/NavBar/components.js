@@ -29,7 +29,6 @@ export const NavItem = styled.button`
 export const useStyles = makeStyles(() => ({
   icon: {
     color: '#ffffff',
-    size: '12px',
     'font-size': '30px',
     transition: 'all 0.5s ease',
     '&:hover': {

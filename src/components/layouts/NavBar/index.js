@@ -16,15 +16,15 @@ export default function NavBar() {
   const NavbarData = [
     {
       path: '/',
-      icon: <HomeIcon className={classes.icon} />
-    },
-    {
-      path: '/users',
-      icon: <GroupIcon className={classes.icon} />
+      icon: <HomeIcon className={classes.icon} fontSize="large" />
     },
     {
       path: '/profile',
-      icon: <AccountCircleIcon className={classes.icon} />
+      icon: <AccountCircleIcon className={classes.icon} fontSize="large" />
+    },
+    {
+      path: '/users',
+      icon: <GroupIcon className={classes.icon} fontSize="large" />
     }
   ]
 
@@ -49,7 +49,7 @@ export default function NavBar() {
         )
       })}
       <NavItem onClick={() => handleSignOut()}>
-        {<LogoutIcon className={classes.icon} />}
+        {<LogoutIcon className={classes.icon} fontSize="large" />}
       </NavItem>
     </NavList>
   )
