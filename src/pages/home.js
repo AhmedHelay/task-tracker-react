@@ -5,37 +5,39 @@ import useAuthUser from 'global/AuthUser'
 import useCreateProject from 'hooks/mutations/projects/useCreateProject'
 import useUpdateProject from 'hooks/mutations/projects/useUpdateProject'
 import useDestoryProject from 'hooks/mutations/projects/useDestroyProject'
+import useAddUserToProject from 'hooks/mutations/projects/useAddUserToProject'
+import useCreateTask from 'hooks/mutations/tasks/useCreateTask'
+import useUpdateTask from 'hooks/mutations/tasks/useUpdateTask'
+import useDestoryTask from 'hooks/mutations/tasks/useDestroyTask'
 
 import DefaultLayout from 'components/layouts/DefaultLayout'
-import ProjectExpandCard from 'components/entity/projects/ProjectExpandCard'
+import ProjectsCardsWrapper from 'components/entity/projects/ProjectsWrapper'
 import ProjectCreateForm from 'components/entity/projects/ProjectCreateForm'
 import ProjectCard from 'components/entity/projects/ProjectCard'
-
-import ProjectsCardsWrapper from 'components/entity/projects/ProjectsWrapper'
-import TextInput from 'components/form/TextInput'
-import {SubmitButton} from 'components/button'
-import handleFormChange from 'utils/forms/handleChange'
+import ProjectExpandCard from 'components/entity/projects/ProjectExpandCard'
+import TaskExpandCard from 'components/entity/tasks/TaskExpandCard'
 
 export default function Home() {
   const {user, isLoading} = useAuthUser()
-  const [formState, setFormState] = useState({})
   const [currentOpenProject, setCurrentOpenProject] = useState(undefined)
+  const [currentOpenTask, setCurrentOpenTask] = useState(undefined)
 
   const {createProject} = useCreateProject()
   const {updateProject} = useUpdateProject()
   const {destroyProject} = useDestoryProject()
+  const {addUserToProject} = useAddUserToProject()
 
-  function handleEvent(event) {
-    handleFormChange(event, formState, setFormState)
-  }
+  const {createTask} = useCreateTask()
+  const {updateTask} = useUpdateTask()
+  const {destroyTask} = useDestoryTask()
 
   function showProject(project) {
     setCurrentOpenProject(project)
   }
 
-  async function onClickCreateProject() {
-    if (formState.name && formState.name.length > 1)
-      await createProject(formState.name, undefined)
+  function showTask(task) {
+    console.log(task)
+    setCurrentOpenTask(undefined)
   }
 
   const navigate = useNavigate()
@@ -46,7 +48,7 @@ export default function Home() {
   }, [user, isLoading, navigate])
 
   return (
-    <DefaultLayout>
+    <DefaultLayout loading={isLoading}>
       <ProjectsCardsWrapper>
         {user?.projects?.map((project) => (
           <ProjectCard
@@ -54,26 +56,28 @@ export default function Home() {
             id={project.id}
             name={project.name}
             tasks={project.tasks}
-            onShowClick={() => showProject(project)}
-            onDestroyClick={() => destroyProject(project.id)}
+            onTaskShowClick={showTask}
+            onTaskCreateClick={createTask}
+            onTaskDestroyClick={destroyTask}
+            onProjectShowClick={() => showProject(project)}
+            onProjectDestroyClick={() => destroyProject(project.id)}
           />
         ))}
-        <ProjectCreateForm>
-          <TextInput
-            id="name"
-            onBlur={(e) => handleEvent(e)}
-            onChange={(e) => handleEvent(e)}
-          />
-          <SubmitButton type="submit" onClick={onClickCreateProject}>
-            Create Project
-          </SubmitButton>
-        </ProjectCreateForm>
+        <ProjectCreateForm onCreateClick={createProject} />
       </ProjectsCardsWrapper>
       {currentOpenProject && (
         <ProjectExpandCard
+          onCloseCardClick={setCurrentOpenProject}
           project={currentOpenProject}
-          update={updateProject}
+          onAddUserClick={addUserToProject}
+          onUpdateClick={updateProject}
         ></ProjectExpandCard>
+      )}
+      {currentOpenTask && (
+        <TaskExpandCard
+          task={currentOpenTask}
+          onUpdateClick={updateTask}
+        ></TaskExpandCard>
       )}
     </DefaultLayout>
   )
