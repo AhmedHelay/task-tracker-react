@@ -18,10 +18,23 @@ export const PageLoading = styled.div`
 
 export const PageContent = styled.div`
   align-items: start;
-  border-radius: 10px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   max-height: 100%;
-  margin: 10px;
+  margin: 0px 10px 10px 10px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  ::-webkit-scrollbar-thumb {
+    height: 10px;
+    width: 10px;
+    border-radius: 10px;
+    background: gray;
+  }
+  ::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+    border-radius: 10px;
+    background-color: #1a1c1e;
+  }
 `
