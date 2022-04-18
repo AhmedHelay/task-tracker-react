@@ -2,8 +2,7 @@ import {useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 
 import useAuthUser from 'global/AuthUser'
-import {SIGN_IN_MUTATION} from 'api/mutations/signIn'
-import {useMutation} from '@apollo/client'
+import useSignIn from 'hooks/mutations/auth/useSignIn'
 
 import DefaultLayout from 'components/layouts/DefaultLayout'
 import FormLayout from 'components/layouts/FormLayout'
@@ -23,19 +22,8 @@ export default function Login() {
     password: ''
   })
 
-  const {
-    state: {user, isLoading},
-    dispatch
-  } = useAuthUser()
-  const [LoginMutation] = useMutation(SIGN_IN_MUTATION, {
-    onCompleted: (data) => {
-      dispatch({type: 'loaded', payload: data.signin})
-    },
-    onError: (err) => {
-      console.error(err)
-      setIsSubmit(false)
-    }
-  })
+  const {user, isLoading} = useAuthUser()
+  const {signIn} = useSignIn()
 
   useEffect(() => {
     setErrorsState(loginFormValidator(formState))
@@ -47,11 +35,9 @@ export default function Login() {
 
   async function handleLogin(e) {
     e.preventDefault()
-    if (checkEmptyState(formState)) return
-    if (checkEmptyState(errorsState)) {
+    if (!checkEmptyState(formState) && checkEmptyState(errorsState)) {
       setIsSubmit(true)
-      dispatch({type: 'loading'})
-      await LoginMutation({variables: {...formState}})
+      await signIn(formState.email, formState.password)
     }
   }
 
