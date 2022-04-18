@@ -8,11 +8,13 @@ import DefaultLayout from 'components/layouts/DefaultLayout'
 import FormLayout from 'components/layouts/FormLayout'
 import TextInput from 'components/form/TextInput'
 import PasswordInput from 'components/form/PasswordInput'
-import {SubmitButton} from 'components/button/index'
 
 import checkEmptyState from 'utils/forms/checkEmptyState'
+import setEmptyStateErrors from 'utils/forms/setEmptyStateErrors'
 import loginFormValidator from 'validators/formValidators/loginFormValidator'
 import handleFormChange from 'utils/forms/handleChange'
+import RedirectMessage from 'components/form/RedirectMessage'
+import {SubmitButton} from 'components/button'
 
 export default function Login() {
   const [isSubmit, setIsSubmit] = useState(false)
@@ -23,11 +25,15 @@ export default function Login() {
   })
 
   const {user, isLoading} = useAuthUser()
-  const {signIn} = useSignIn()
+  const {signIn, loading, error} = useSignIn()
 
   useEffect(() => {
-    setErrorsState(loginFormValidator(formState))
+    setErrorsState((errorsState) => loginFormValidator(formState, errorsState))
   }, [formState])
+
+  useEffect(() => {
+    error && setIsSubmit(false)
+  }, [error])
 
   function handleEvent(event) {
     handleFormChange(event, formState, setFormState)
@@ -35,7 +41,8 @@ export default function Login() {
 
   async function handleLogin(e) {
     e.preventDefault()
-    if (!checkEmptyState(formState) && checkEmptyState(errorsState)) {
+    setEmptyStateErrors(formState, errorsState, setErrorsState)
+    if (formState.email && formState.password && checkEmptyState(errorsState)) {
       setIsSubmit(true)
       await signIn(formState.email, formState.password)
     }
@@ -49,33 +56,38 @@ export default function Login() {
   }, [user, isLoading, navigate])
 
   return (
-    <DefaultLayout title="Login">
-      <FormLayout title="Login">
+    <DefaultLayout>
+      <FormLayout
+        title="Login"
+        error={error && error.message}
+        loading={loading}
+      >
         <TextInput
-          placeholder="Email"
           id="email"
           label="Email"
-          type="text"
           value={formState.email}
           error={errorsState.email}
           onBlur={(e) => handleEvent(e)}
           onChange={(e) => handleEvent(e)}
-          required
         />
         <PasswordInput
-          placeholder="Password"
           id="password"
           label="Password"
           value={formState.password}
           error={errorsState.password}
           onBlur={(e) => handleEvent(e)}
           onChange={(e) => handleEvent(e)}
+          recovery={true}
           autoComplete="off"
-          required
         />
-        <SubmitButton type="submit" disabled={isSubmit} onClick={handleLogin}>
+        <SubmitButton disabled={isSubmit} onClick={handleLogin}>
           Login
         </SubmitButton>
+        <RedirectMessage
+          text="Not a memeber?"
+          textAction="Register NOW!"
+          path="/registration"
+        />
       </FormLayout>
     </DefaultLayout>
   )

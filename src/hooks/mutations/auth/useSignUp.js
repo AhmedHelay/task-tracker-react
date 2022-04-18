@@ -13,7 +13,8 @@ const useSignUp = () => {
       localStorage.setItem(ACCESS_TOKEN, accessToken)
       localStorage.setItem(REFRESH_TOKEN, refreshToken)
       return [CURRENT_USER]
-    }
+    },
+    onError: () => {}
   })
 
   const signUp = async (email, password, firstName, lastName) => {

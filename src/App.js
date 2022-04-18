@@ -1,9 +1,14 @@
 import {Routes, Route} from 'react-router-dom'
+
 import {AuthUser} from 'global/AuthUser'
 import EnvSpecificRouter from 'components/EnvSpecificRouter'
+
 import Home from 'pages/home'
 import Login from 'pages/login'
 import Registration from 'pages/registration'
+import PasswordRecovery from 'pages/passwordRecovery'
+import Users from 'pages/users'
+import Profile from 'pages/profile'
 
 function App() {
   return (
@@ -11,7 +16,11 @@ function App() {
       <EnvSpecificRouter>
         <Routes>
           <Route path={''} element={<Home />} />
-          <Route path={'/login'} element={<Login />} />
+          <Route exact path={'/'} element={<Home />} />
+          <Route path={'/users'} element={<Users />} />
+          <Route path={'/profile'} element={<Profile />} />
+          <Route exact path={'/login'} element={<Login />} />
+          <Route path={'/login/recovery'} element={<PasswordRecovery />} />
           <Route path={'/registration'} element={<Registration />} />
         </Routes>
       </EnvSpecificRouter>

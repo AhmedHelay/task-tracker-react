@@ -8,11 +8,13 @@ import DefaultLayout from 'components/layouts/DefaultLayout'
 import FormLayout from 'components/layouts/FormLayout'
 import TextInput from 'components/form/TextInput'
 import PasswordInput from 'components/form/PasswordInput'
-import {SubmitButton} from 'components/button/index'
 
 import checkEmptyState from 'utils/forms/checkEmptyState'
 import registrationFormValidator from 'validators/formValidators/registrationFormValidator'
 import handleFormChange from 'utils/forms/handleChange'
+import RedirectMessage from 'components/form/RedirectMessage'
+import {SubmitButton} from 'components/button'
+import setEmptyStateErrors from 'utils/forms/setEmptyStateErrors'
 
 export default function Registration() {
   const initialValues = {
@@ -26,11 +28,17 @@ export default function Registration() {
   const [isSubmit, setIsSubmit] = useState(false)
 
   const {user, isLoading} = useAuthUser()
-  const {signUp} = useSignUp()
+  const {signUp, loading, error} = useSignUp()
 
   useEffect(() => {
-    setErrorsState(registrationFormValidator(formState))
+    setErrorsState((errorsState) =>
+      registrationFormValidator(formState, errorsState)
+    )
   }, [formState])
+
+  useEffect(() => {
+    error && setIsSubmit(false)
+  }, [error])
 
   function handleEvent(event) {
     handleFormChange(event, formState, setFormState)
@@ -38,13 +46,14 @@ export default function Registration() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    if (!checkEmptyState(formState) && checkEmptyState(errorsState)) {
+    setEmptyStateErrors(formState, errorsState, setErrorsState)
+    if (formState.email && formState.password && checkEmptyState(errorsState)) {
       setIsSubmit(true)
       await signUp(
-        formState.email,
-        formState.password,
         formState.firstName,
-        formState.lastName
+        formState.lastName,
+        formState.email,
+        formState.password
       )
     }
   }
@@ -57,43 +66,37 @@ export default function Registration() {
   }, [user, isLoading, navigate])
 
   return (
-    <DefaultLayout title="Sign Up">
-      <FormLayout title="Registration">
+    <DefaultLayout>
+      <FormLayout
+        title="Registration"
+        loading={loading}
+        error={error && error.message}
+      >
         <TextInput
-          placeholder="Ahmad"
           id="firstName"
           label="First Name"
-          type="text"
           value={formState.firstName}
           error={errorsState.firstName}
           onBlur={(e) => handleEvent(e)}
           onChange={(e) => handleEvent(e)}
-          required
         />
         <TextInput
-          placeholder="Helaly"
           id="lastName"
           label="Last Name"
-          type="text"
           value={formState.lastName}
           error={errorsState.lastName}
           onBlur={(e) => handleEvent(e)}
           onChange={(e) => handleEvent(e)}
-          required
         />
         <TextInput
-          placeholder="Email"
           id="email"
           label="Email"
-          type="text"
           value={formState.email}
           error={errorsState.email}
           onBlur={(e) => handleEvent(e)}
           onChange={(e) => handleEvent(e)}
-          required
         />
         <PasswordInput
-          placeholder="Password"
           id="password"
           label="Password"
           value={formState.password}
@@ -101,16 +104,15 @@ export default function Registration() {
           onBlur={(e) => handleEvent(e)}
           onChange={(e) => handleEvent(e)}
           autoComplete="off"
-          required
         />
-        <SubmitButton
-          type="submit"
-          hover="#006bad"
-          disabled={isSubmit}
-          onClick={handleSubmit}
-        >
+        <SubmitButton disabled={isSubmit} onClick={handleSubmit}>
           Create Account
         </SubmitButton>
+        <RedirectMessage
+          text="Already a memeber?"
+          textAction="Login NOW!"
+          path="/login"
+        />
       </FormLayout>
     </DefaultLayout>
   )

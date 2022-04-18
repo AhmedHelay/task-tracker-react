@@ -1,14 +1,14 @@
+import useAuthUser from 'global/AuthUser'
 import React from 'react'
 
-import {Header, HeaderTitle, AppName, Content} from './components'
+import NavBar from '../NavBar'
+import {Content} from './components'
 
-export default function DefaultLayout({title, children}) {
+export default function DefaultLayout({children}) {
+  const {user} = useAuthUser()
   return (
     <Content>
-      <Header>
-        <HeaderTitle>{title}</HeaderTitle>
-        <AppName>Task tracker</AppName>
-      </Header>
+      {user && <NavBar />}
       <main>{children}</main>
     </Content>
   )

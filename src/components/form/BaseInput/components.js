@@ -1,30 +1,34 @@
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 
-export const FormBaseInput = styled.div`
-  background-color: #fff;
-  border-radius: 15px;
-  border: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  overflow: hidden;
-  margin-top: 4px;
+export const Container = styled.div`
+  margin-top: 20px;
 `
+
+export const FormBaseInput = styled.div(({$isError}) => {
+  return css`
+    background-color: #6b6867;
+    border-radius: 5px;
+    border: solid ${$isError ? 'red' : '#6b6867'};
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    margin-top: 4px;
+  `
+})
 
 export const FormInputLabel = styled.label`
   color: #eee;
   font-family: sans-serif;
   font-size: 20px;
   font-weight: 600;
-  padding-left: 1%;
 `
 
 export const FormInputError = styled.p`
-  color: yellow;
+  color: red;
   font-size: small;
   font-size: 15px;
   font-weight: bold;
-  margin-left: 5px;
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 `
