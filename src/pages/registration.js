@@ -49,12 +49,7 @@ export default function Registration() {
     setEmptyStateErrors(formState, errorsState, setErrorsState)
     if (formState.email && formState.password && checkEmptyState(errorsState)) {
       setIsSubmit(true)
-      await signUp(
-        formState.firstName,
-        formState.lastName,
-        formState.email,
-        formState.password
-      )
+      await signUp(formState)
     }
   }
 
