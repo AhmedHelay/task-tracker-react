@@ -66,12 +66,8 @@ export default function Registration() {
   }, [user, isLoading, navigate])
 
   return (
-    <DefaultLayout>
-      <FormLayout
-        title="Registration"
-        loading={loading}
-        error={error && error.message}
-      >
+    <DefaultLayout loading={loading}>
+      <FormLayout title="Registration" error={error && error.message}>
         <TextInput
           id="firstName"
           label="First Name"

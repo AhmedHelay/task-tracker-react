@@ -6,7 +6,7 @@ export const UPDATE_TASK = gql`
     $id: ID!
     $title: String!
     $description: String
-    $status: status
+    $status: TaskStatus!
   ) {
     updateTask(
       taskId: $id

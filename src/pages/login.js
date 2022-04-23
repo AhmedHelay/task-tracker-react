@@ -56,12 +56,8 @@ export default function Login() {
   }, [user, isLoading, navigate])
 
   return (
-    <DefaultLayout>
-      <FormLayout
-        title="Login"
-        error={error && error.message}
-        loading={loading}
-      >
+    <DefaultLayout loading={loading}>
+      <FormLayout title="Login" error={error && error.message}>
         <TextInput
           id="email"
           label="Email"

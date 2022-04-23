@@ -6,6 +6,7 @@ export const Container = styled.div`
 
 export const FormBaseInput = styled.div(({$isError}) => {
   return css`
+    -webkit-user-select: none;
     background-color: #6b6867;
     border-radius: 5px;
     border: solid ${$isError ? 'red' : '#6b6867'};

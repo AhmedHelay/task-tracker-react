@@ -1,15 +1,22 @@
 import useAuthUser from 'global/AuthUser'
 import React from 'react'
+import {DotLoader} from 'react-spinners'
 
 import NavBar from '../NavBar'
-import {Content} from './components'
+import {PageWrapper, PageLoading, PageContent} from './components'
 
-export default function DefaultLayout({children}) {
+export default function DefaultLayout({loading, children}) {
   const {user} = useAuthUser()
   return (
-    <Content>
+    <PageWrapper>
       {user && <NavBar />}
-      <main>{children}</main>
-    </Content>
+      {loading ? (
+        <PageLoading>
+          <DotLoader color={'#6400f7'} loading={loading} size={50} />
+        </PageLoading>
+      ) : (
+        <PageContent>{children}</PageContent>
+      )}
+    </PageWrapper>
   )
 }

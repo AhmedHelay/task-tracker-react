@@ -6,7 +6,7 @@ export const CREATE_TASK = gql`
     $id: ID!
     $title: String!
     $description: String
-    $status: status
+    $status: TaskStatus!
   ) {
     createTask(
       projectId: $id

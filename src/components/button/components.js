@@ -13,6 +13,7 @@ export const StyledButton = styled.button`
   margin-top: 30px;
   width: 100%;
   transition: all 0.5s cubic-bezier(0.02, 0.01, 0.47, 1);
+  -webkit-user-select: none;
 
   &:hover {
     background-color: ${({hover}) => hover || 'black'};
