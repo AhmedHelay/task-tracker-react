@@ -1,9 +1,9 @@
 import emailValidator from './inputValidators/emailValidator'
 import passwordValidator from './inputValidators/passwordValidator'
 
-export default function loginFormValidator(values) {
+export default function loginFormValidator(formState, errorsState) {
   const errors = {}
-  errors.email = emailValidator(values.email)
-  errors.password = passwordValidator(values.password)
-  return errors
+  errors.email = emailValidator(formState.email)
+  errors.password = passwordValidator(formState.password)
+  return {...errorsState, ...errors}
 }

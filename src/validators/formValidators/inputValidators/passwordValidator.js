@@ -8,5 +8,5 @@ export default function passwordValidator(password) {
   if (!bigLettersRegex.test(password))
     return 'Password must contain at least 1 big letter'
   if (password.length < 9) return 'Password must be more than 9 characters'
-  if (password.length > 16) return 'Password cannot exceed 10 characters'
+  if (password.length > 16) return 'Password cannot exceed 16 characters'
 }
