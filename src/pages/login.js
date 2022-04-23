@@ -44,7 +44,7 @@ export default function Login() {
     setEmptyStateErrors(formState, errorsState, setErrorsState)
     if (formState.email && formState.password && checkEmptyState(errorsState)) {
       setIsSubmit(true)
-      await signIn(formState.email, formState.password)
+      await signIn(formState)
     }
   }
 

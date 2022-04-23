@@ -17,8 +17,8 @@ const useSignIn = () => {
     onError: () => {}
   })
 
-  const signIn = async (email, password) => {
-    await mutation({variables: {email: email, password: password}})
+  const signIn = async (formState) => {
+    await mutation({variables: {...formState}})
   }
 
   return {

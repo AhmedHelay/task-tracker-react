@@ -17,14 +17,9 @@ const useSignUp = () => {
     onError: () => {}
   })
 
-  const signUp = async (email, password, firstName, lastName) => {
+  const signUp = async (formState) => {
     await mutation({
-      variables: {
-        email: email,
-        password: password,
-        firstName: firstName,
-        lastName: lastName
-      }
+      variables: {...formState}
     })
   }
 
