@@ -36,8 +36,7 @@ export default function Home() {
   }
 
   function showTask(task) {
-    console.log(task)
-    setCurrentOpenTask(undefined)
+    setCurrentOpenTask(task)
   }
 
   const navigate = useNavigate()
@@ -65,7 +64,7 @@ export default function Home() {
         ))}
         <ProjectCreateForm onCreateClick={createProject} />
       </ProjectsCardsWrapper>
-      {currentOpenProject && (
+      {false && (
         <ProjectExpandCard
           onCloseCardClick={setCurrentOpenProject}
           project={currentOpenProject}
@@ -73,7 +72,7 @@ export default function Home() {
           onUpdateClick={updateProject}
         ></ProjectExpandCard>
       )}
-      {currentOpenTask && (
+      {false && (
         <TaskExpandCard
           task={currentOpenTask}
           onUpdateClick={updateTask}

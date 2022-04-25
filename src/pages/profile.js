@@ -4,6 +4,8 @@ import useAuthUser from 'global/AuthUser'
 
 import DefaultLayout from 'components/layouts/DefaultLayout'
 import CurrentUserCard from 'components/entity/users/CurrentUserCard'
+import UserHeader from 'components/entity/users/CurrentUserCard/UserHeader'
+import UpdateUserForm from 'components/entity/users/CurrentUserCard/UpdateUserForm'
 
 export default function Profile() {
   const {user, isLoading} = useAuthUser()
@@ -17,7 +19,12 @@ export default function Profile() {
 
   return (
     <DefaultLayout loading={isLoading}>
-      <CurrentUserCard me={user} />
+      {user && (
+        <CurrentUserCard>
+          <UserHeader user={user} />
+          <UpdateUserForm user={user} />
+        </CurrentUserCard>
+      )}
     </DefaultLayout>
   )
 }

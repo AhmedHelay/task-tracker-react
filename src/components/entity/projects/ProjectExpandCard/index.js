@@ -29,7 +29,6 @@ export default function ProjectExpandCard({
   }
 
   function handleEventChange(event) {
-    console.log(event.type, event.target)
     if (userId > 100000) {
       setUserId(event.target.value)
       handleFormChange(event, formState, setFormState)
@@ -37,7 +36,6 @@ export default function ProjectExpandCard({
   }
 
   async function handleAddUserClick() {
-    console.log(userId)
     await onAddUserClick(project.id, userId)
   }
 
