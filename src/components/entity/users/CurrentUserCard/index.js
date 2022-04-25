@@ -1,41 +1,20 @@
 import React from 'react'
 
-import {Avatar, Grid} from '@mui/material'
-import {Typography} from '@material-ui/core'
+import {Grid} from '@mui/material'
 import {Wrapper} from 'components/entity/components'
-import {Img} from '../components'
-
-export default function CurrentUserCard({me}) {
-  const {firstName, avatarUrl} = me
+export default function CurrentUserCard({children}) {
   return (
     <Wrapper>
-      <Grid
-        sx={{
-          bgcolor: '#6b6867',
-          minWidth: '500px',
-          width: '700px',
-          height: '900px',
-          borderRadius: '30px'
-        }}
-        alignItems="center"
-        justifyContent="center"
-      >
+      <Grid container justifyContent="start" alignItems="center">
         <Grid
           sx={{
-            display: 'flex',
-            padding: '20px'
+            bgcolor: '#1a1c1e',
+            width: '500px',
+            height: '750px',
+            borderRadius: '30px'
           }}
         >
-          {avatarUrl ? (
-            <Img src={avatarUrl} />
-          ) : (
-            <Avatar sx={{bgcolor: '#6400f7', width: 70, height: 70}}>
-              <Typography sx={{color: 'white', fontWeight: 'bold'}}>
-                {firstName ? firstName.charAt(0) : 'A'}
-              </Typography>
-            </Avatar>
-          )}
-          <Typography variant="h1"> {firstName}</Typography>
+          {children}
         </Grid>
       </Grid>
     </Wrapper>
