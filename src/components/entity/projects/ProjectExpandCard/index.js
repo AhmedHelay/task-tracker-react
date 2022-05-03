@@ -11,16 +11,16 @@ import {ExpandCardWrapper} from 'components/entity/components'
 import UserCard from 'components/entity/users/UserCard'
 
 import handleFormChange from 'utils/forms/handleChange'
+import useAddUserToProject from 'hooks/mutations/projects/useAddUserToProject'
+import useUpdateProject from 'hooks/mutations/projects/useUpdateProject'
 
-export default function ProjectExpandCard({
-  project,
-  onCloseCardClick,
-  onUpdateClick,
-  onAddUserClick
-}) {
+export default function ProjectExpandCard({project, onCloseCardClick}) {
   const {data} = useQuery(USERS)
   const [formState, setFormState] = useState({})
   const [userId, setUserId] = useState()
+
+  const {addUserToProject} = useAddUserToProject()
+  const {updateProject} = useUpdateProject()
 
   const creator = project.creator
   const INITIAL_STATE = {
@@ -36,7 +36,7 @@ export default function ProjectExpandCard({
   }
 
   async function handleAddUserClick() {
-    await onAddUserClick(project.id, userId)
+    await addUserToProject(project.id, userId)
   }
 
   async function handleUpdateClick() {
@@ -45,7 +45,7 @@ export default function ProjectExpandCard({
         formState.description !== INITIAL_STATE.description) &&
       formState.name.length > 1
     )
-      await onUpdateClick(project.id, formState.name, formState.description)
+      await updateProject(project.id, formState.name, formState.description)
   }
 
   return (

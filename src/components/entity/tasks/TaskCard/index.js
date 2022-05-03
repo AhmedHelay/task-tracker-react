@@ -4,6 +4,7 @@ import {Card, IconButton, Typography} from '@mui/material'
 
 import ZoomInIcon from '@mui/icons-material/ZoomIn'
 import DeleteIcon from '@mui/icons-material/Delete'
+import useDestoryTask from 'hooks/mutations/tasks/useDestroyTask'
 
 const useStyle = makeStyles(() => ({
   root: {
@@ -19,16 +20,18 @@ const useStyle = makeStyles(() => ({
 }))
 
 export default function TaskCard({
+  id,
   title,
   status,
   createdAt,
-  onTaskShowClick,
-  onTaskDestroyClick
+  onTaskShowClick
 }) {
+  const {destroyTask} = useDestoryTask()
   const classes = useStyle()
+
   function handleDestroy() {
     const result = confirm('Are you sure you want to delete this Task ?')
-    if (result) onTaskDestroyClick()
+    if (result) destroyTask(id)
   }
   return (
     <Card className={classes.root}>

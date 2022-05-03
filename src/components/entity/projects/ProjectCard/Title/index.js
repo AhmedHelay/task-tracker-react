@@ -1,15 +1,19 @@
 import React from 'react'
 
+import useDestoryProject from 'hooks/mutations/projects/useDestroyProject'
+
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 
 import {Icons, Name, OnLineTitle} from './components'
 import {IconButton} from '@mui/material'
 
-export default function Title({name, onShowClick, onProjectDestroyClick}) {
+export default function Title({id, name, onProjectShowClick}) {
+  const {destroyProject} = useDestoryProject()
+
   function handleDestroy() {
     const result = confirm('Are you sure you want to delete this project ?')
-    if (result) onProjectDestroyClick()
+    if (result) destroyProject(id)
   }
   return (
     <OnLineTitle>
@@ -18,7 +22,7 @@ export default function Title({name, onShowClick, onProjectDestroyClick}) {
         <IconButton
           sx={{color: '#619cff'}}
           color="info"
-          onClick={() => onShowClick()}
+          onClick={() => onProjectShowClick()}
         >
           <EditIcon />
         </IconButton>

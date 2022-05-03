@@ -1,14 +1,17 @@
 import React, {useState} from 'react'
 import {Button, Grid, TextField} from '@mui/material'
+import useCreateTask from 'hooks/mutations/tasks/useCreateTask'
 
-export default function TaskCreateForm({id, onCreateClick}) {
+export default function TaskCreateForm({projectId}) {
   const [input, setInput] = useState('')
   const [disabled, setdisabled] = useState(false)
+
+  const {createTask} = useCreateTask()
 
   async function handleClick() {
     if (input && input.length > 0) {
       setdisabled(true)
-      await onCreateClick(id, input, undefined, 'NOT_STARTED')
+      await createTask(projectId, input, undefined, 'NOT_STARTED')
       setInput('')
     }
     setdisabled(false)
