@@ -28,10 +28,7 @@ export default function ProjectCard({
   name,
   tasks,
   onTaskShowClick,
-  onTaskCreateClick,
-  onTaskDestroyClick,
-  onProjectShowClick,
-  onProjectDestroyClick
+  onProjectShowClick
 }) {
   const classes = useStyle()
 
@@ -40,24 +37,23 @@ export default function ProjectCard({
       <Title
         id={id}
         name={name}
-        onShowClick={onProjectShowClick}
-        onProjectDestroyClick={onProjectDestroyClick}
+        onProjectShowClick={onProjectShowClick}
       ></Title>
       <TasksCardsWrapper>
         {tasks?.map((task) => (
           <TaskCard
             key={task.id}
+            id={task.id}
             title={task.title}
             status={task.status}
             createdAt={task.createdAt}
             onTaskShowClick={() => {
               onTaskShowClick(task)
             }}
-            onTaskDestroyClick={() => onTaskDestroyClick(task.id)}
           />
         ))}
       </TasksCardsWrapper>
-      <TaskCreateForm id={id} onCreateClick={onTaskCreateClick} />
+      <TaskCreateForm projectId={id} />
     </Paper>
   )
 }

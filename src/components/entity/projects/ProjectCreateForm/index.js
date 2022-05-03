@@ -1,17 +1,22 @@
 import React, {useState} from 'react'
+
+import useCreateProject from 'hooks/mutations/projects/useCreateProject'
+
 import {Button, Collapse, Grid, IconButton, TextField} from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import ClearIcon from '@mui/icons-material/Clear'
 
-export default function ProjectCreateForm({onCreateClick}) {
+export default function ProjectCreateForm() {
   const [input, setInput] = useState('')
   const [disabled, setdisabled] = useState(false)
   const [showForm, setShowForm] = useState(false)
 
+  const {createProject} = useCreateProject()
+
   async function handleClick() {
     if (input && input.length > 0) {
       setdisabled(true)
-      await onCreateClick(input)
+      await createProject(input)
       setInput('')
     }
     setdisabled(false)
