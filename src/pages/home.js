@@ -6,7 +6,7 @@ import DefaultLayout from 'components/layouts/DefaultLayout'
 import ProjectsCardsWrapper from 'components/entity/projects/ProjectsWrapper'
 import ProjectCreateForm from 'components/entity/projects/ProjectCreateForm'
 import ProjectCard from 'components/entity/projects/ProjectCard'
-import ProjectExpandCard from 'components/entity/projects/ProjectExpandCard'
+import ProjectModalCard from 'components/entity/projects/ProjectModalCard'
 import TaskExpandCard from 'components/entity/tasks/TaskExpandCard'
 
 export default function Home() {
@@ -45,10 +45,10 @@ export default function Home() {
         <ProjectCreateForm />
       </ProjectsCardsWrapper>
       {currentOpenProject && (
-        <ProjectExpandCard
+        <ProjectModalCard
           project={currentOpenProject}
           onCloseCardClick={setCurrentOpenProject}
-        ></ProjectExpandCard>
+        ></ProjectModalCard>
       )}
       {currentOpenTask && (
         <TaskExpandCard
