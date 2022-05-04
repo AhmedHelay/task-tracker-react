@@ -29,7 +29,7 @@ export const Wrapper = styled.div`
   }
 `
 
-export const ExpandCardWrapper = styled.div`
+export const ModalCardWrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;

@@ -1,7 +1,9 @@
 import React from 'react'
-import {Avatar, Typography} from '@mui/material'
+
+import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
+import Box from '@material-ui/core/Box'
 import {Img} from '../../components'
-import {Box} from '@material-ui/core'
 
 export default function UserHeader({user}) {
   const {avatarUrl, firstName} = user

@@ -1,6 +1,9 @@
 import React from 'react'
-import {makeStyles} from '@material-ui/styles'
-import {Card, IconButton, Typography} from '@mui/material'
+
+import makeStyles from '@material-ui/styles/makeStyles'
+import Card from '@mui/material/Card'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
 
 import ZoomInIcon from '@mui/icons-material/ZoomIn'
 import DeleteIcon from '@mui/icons-material/Delete'

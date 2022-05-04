@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Grid} from '@mui/material'
+import Grid from '@mui/material/Grid'
 import {Wrapper} from 'components/entity/components'
 export default function CurrentUserCard({children}) {
   return (

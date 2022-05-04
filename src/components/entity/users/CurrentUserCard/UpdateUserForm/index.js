@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import {Box, Button} from '@mui/material'
-import TextInput from 'components/form/TextInput'
+
 import useUpdateUser from 'hooks/mutations/users/useUpdateUser'
+
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import TextInput from 'components/form/TextInput'
 
 import handleFormChange from 'utils/forms/handleChange'
 import registrationFormValidator from 'validators/formValidators/registrationFormValidator'

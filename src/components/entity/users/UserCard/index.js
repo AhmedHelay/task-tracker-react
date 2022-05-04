@@ -1,28 +1,26 @@
 import React from 'react'
 
-import {Avatar, Grid, Tooltip} from '@mui/material'
+import Avatar from '@mui/material/Avatar'
+import Grid from '@mui/material/Grid'
+import Tooltip from '@mui/material/Tooltip'
 import {Card, Img, Text} from '../components'
 
 export default function UserCard({firstName, lastName, email, avatarUrl}) {
-  function getShortName() {
-    if (firstName && lastName) return firstName.charAt(0) + lastName.charAt(0)
-    else return 'A'
-  }
+  const shortName = () =>
+    firstName && lastName ? firstName.charAt(0) + lastName.charAt(0) : 'A'
 
-  function getFullName() {
-    if (firstName && lastName) return firstName + ' ' + lastName
-    else return 'Anonymous'
-  }
+  const fullName = () =>
+    firstName && lastName ? firstName + ' ' + lastName : 'Anonymous'
 
   return (
     <Card>
       <Grid container alignItems="center" justifyContent="start">
-        <Tooltip title={getFullName()} placement="top" arrow>
+        <Tooltip title={fullName()} placement="top" arrow>
           {avatarUrl ? (
             <Img src={avatarUrl} />
           ) : (
             <Avatar sx={{bgcolor: '#6400f7', width: 50, height: 50}}>
-              {getShortName(firstName, lastName)}
+              {shortName(firstName, lastName)}
             </Avatar>
           )}
         </Tooltip>

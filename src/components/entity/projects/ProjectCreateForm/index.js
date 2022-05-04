@@ -2,7 +2,12 @@ import React, {useState} from 'react'
 
 import useCreateProject from 'hooks/mutations/projects/useCreateProject'
 
-import {Button, Collapse, Grid, IconButton, TextField} from '@mui/material'
+import Button from '@mui/material/Button'
+import Collapse from '@mui/material/Collapse'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import TextField from '@mui/material/TextField'
+
 import AddIcon from '@mui/icons-material/Add'
 import ClearIcon from '@mui/icons-material/Clear'
 
