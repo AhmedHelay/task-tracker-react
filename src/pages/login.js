@@ -1,7 +1,5 @@
 import {useState, useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
 
-import useAuthUser from 'global/AuthUser'
 import useSignIn from 'hooks/mutations/auth/useSignIn'
 
 import DefaultLayout from 'components/layouts/DefaultLayout'
@@ -15,8 +13,9 @@ import loginFormValidator from 'validators/formValidators/loginFormValidator'
 import handleFormChange from 'utils/forms/handleChange'
 import RedirectMessage from 'components/form/RedirectMessage'
 import {SubmitButton} from 'components/button'
+import AuthorizeComponent from 'components/AuthorizeComponent'
 
-export default function Login() {
+function Login() {
   const [isSubmit, setIsSubmit] = useState(false)
   const [errorsState, setErrorsState] = useState({})
   const [formState, setFormState] = useState({
@@ -24,7 +23,6 @@ export default function Login() {
     password: ''
   })
 
-  const {user, isLoading} = useAuthUser()
   const {signIn, loading, error} = useSignIn()
 
   useEffect(() => {
@@ -47,13 +45,6 @@ export default function Login() {
       await signIn(formState)
     }
   }
-
-  const navigate = useNavigate()
-  useEffect(() => {
-    if (isLoading === false && user) {
-      navigate('/', {replace: true})
-    }
-  }, [user, isLoading, navigate])
 
   return (
     <DefaultLayout loading={loading}>
@@ -88,3 +79,7 @@ export default function Login() {
     </DefaultLayout>
   )
 }
+
+export default (
+  <AuthorizeComponent Component={Login} onUserLogedIn={true} redirectTo="/" />
+)

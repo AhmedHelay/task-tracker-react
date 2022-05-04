@@ -1,7 +1,4 @@
 import {useEffect, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
-
-import useAuthUser from 'global/AuthUser'
 import useSignUp from 'hooks/mutations/auth/useSignUp'
 
 import DefaultLayout from 'components/layouts/DefaultLayout'
@@ -15,8 +12,9 @@ import handleFormChange from 'utils/forms/handleChange'
 import RedirectMessage from 'components/form/RedirectMessage'
 import {SubmitButton} from 'components/button'
 import setEmptyStateErrors from 'utils/forms/setEmptyStateErrors'
+import AuthorizeComponent from 'components/AuthorizeComponent'
 
-export default function Registration() {
+function Registration() {
   const initialValues = {
     email: '',
     firstName: '',
@@ -27,7 +25,6 @@ export default function Registration() {
   const [errorsState, setErrorsState] = useState({})
   const [isSubmit, setIsSubmit] = useState(false)
 
-  const {user, isLoading} = useAuthUser()
   const {signUp, loading, error} = useSignUp()
 
   useEffect(() => {
@@ -52,13 +49,6 @@ export default function Registration() {
       await signUp(formState)
     }
   }
-
-  const navigate = useNavigate()
-  useEffect(() => {
-    if (isLoading === false && user) {
-      navigate('/', {replace: true})
-    }
-  }, [user, isLoading, navigate])
 
   return (
     <DefaultLayout loading={loading}>
@@ -108,3 +98,11 @@ export default function Registration() {
     </DefaultLayout>
   )
 }
+
+export default (
+  <AuthorizeComponent
+    Component={Registration}
+    onUserLogedIn={true}
+    redirectTo="/"
+  />
+)

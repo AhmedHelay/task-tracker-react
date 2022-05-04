@@ -8,8 +8,9 @@ import ProjectCreateForm from 'components/entity/projects/ProjectCreateForm'
 import ProjectCard from 'components/entity/projects/ProjectCard'
 import ProjectModalCard from 'components/entity/projects/ProjectModalCard'
 import TaskExpandCard from 'components/entity/tasks/TaskExpandCard'
+import AuthorizeComponent from 'components/AuthorizeComponent'
 
-export default function Home() {
+function Home() {
   const {user, isLoading} = useAuthUser()
   const [currentOpenProject, setCurrentOpenProject] = useState(undefined)
   const [currentOpenTask, setCurrentOpenTask] = useState(undefined)
@@ -59,3 +60,11 @@ export default function Home() {
     </DefaultLayout>
   )
 }
+
+export default (
+  <AuthorizeComponent
+    Component={Home}
+    onUserLogedIn={false}
+    redirectTo="/login"
+  />
+)

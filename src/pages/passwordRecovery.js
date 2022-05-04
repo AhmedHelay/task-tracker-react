@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react'
 
-import {useNavigate} from 'react-router-dom'
-import useAuthUser from 'global/AuthUser'
 import useRequestPasswordRecovery from 'hooks/mutations/users/useRequestPasswordRecovery'
 
 import FormLayout from 'components/layouts/FormLayout'
@@ -10,9 +8,9 @@ import {SubmitButton} from 'components/button'
 import emailValidator from 'validators/formValidators/inputValidators/emailValidator'
 import DefaultLayout from 'components/layouts/DefaultLayout'
 import RedirectMessage from 'components/form/RedirectMessage'
+import AuthorizeComponent from 'components/AuthorizeComponent'
 
-export default function PasswordRecovery() {
-  const {user, isLoading} = useAuthUser()
+function PasswordRecovery() {
   const {requestPasswordRecovery, data, loading} = useRequestPasswordRecovery()
   const responeMessage = data?.requestPasswordRecovery.message
 
@@ -40,13 +38,6 @@ export default function PasswordRecovery() {
   useEffect(() => {
     setErrorState(emailValidator(inputState))
   }, [inputState])
-
-  const navigate = useNavigate()
-  useEffect(() => {
-    if (isLoading === false && user) {
-      navigate('/', {replace: true})
-    }
-  }, [user, isLoading, navigate])
 
   return (
     <DefaultLayout>
@@ -76,3 +67,11 @@ export default function PasswordRecovery() {
     </DefaultLayout>
   )
 }
+
+export default (
+  <AuthorizeComponent
+    Component={PasswordRecovery}
+    onUserLogedIn={true}
+    redirectTo="/"
+  />
+)
