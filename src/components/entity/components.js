@@ -1,5 +1,6 @@
 import styled, {keyframes} from 'styled-components'
-import {fadeInUp, fadeInDown} from 'react-animations'
+import fadeInUp from 'react-animations/lib/fade-in-up'
+import fadeInDown from 'react-animations/lib/fade-in-down'
 
 const fadeInUpAnimation = keyframes`${fadeInUp}`
 const fadeInDownAnimation = keyframes`${fadeInDown}`

@@ -1,6 +1,6 @@
 import useAuthUser from 'global/AuthUser'
 import React from 'react'
-import {DotLoader} from 'react-spinners'
+import DotLoader from 'react-spinners/DotLoader'
 
 import NavBar from '../NavBar'
 import {PageWrapper, PageLoading, PageContent} from './components'
