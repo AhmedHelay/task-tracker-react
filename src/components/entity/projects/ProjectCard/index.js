@@ -2,7 +2,7 @@ import React from 'react'
 
 import {Paper} from '@material-ui/core'
 import {makeStyles} from '@material-ui/styles'
-import Title from './Title'
+import Header from './Header'
 
 import TaskCard from 'components/entity/tasks/TaskCard'
 import TasksCardsWrapper from 'components/entity/tasks/TasksCardsWrapper'
@@ -34,11 +34,11 @@ export default function ProjectCard({
 
   return (
     <Paper className={classes.root}>
-      <Title
+      <Header
         id={id}
         name={name}
         onProjectShowClick={onProjectShowClick}
-      ></Title>
+      ></Header>
       <TasksCardsWrapper>
         {tasks?.map((task) => (
           <TaskCard

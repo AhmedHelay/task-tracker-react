@@ -6,9 +6,9 @@ import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 
 import {Icons, Name, OnLineTitle} from './components'
-import {IconButton} from '@mui/material'
+import IconButton from '@mui/material/IconButton'
 
-export default function Title({id, name, onProjectShowClick}) {
+export default function Header({id, name, onProjectShowClick}) {
   const {destroyProject} = useDestoryProject()
 
   function handleDestroy() {
