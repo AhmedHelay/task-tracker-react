@@ -1,19 +1,18 @@
 import {useState, useEffect} from 'react'
 
+import AuthorizeComponent from 'components/AuthorizeComponent'
 import useSignIn from 'hooks/mutations/auth/useSignIn'
 
-import DefaultLayout from 'components/layouts/DefaultLayout'
 import FormLayout from 'components/layouts/FormLayout'
 import TextInput from 'components/form/TextInput'
 import PasswordInput from 'components/form/PasswordInput'
+import RedirectMessage from 'components/form/RedirectMessage'
+import {SubmitButton} from 'components/button'
 
 import checkEmptyState from 'utils/forms/checkEmptyState'
 import setEmptyStateErrors from 'utils/forms/setEmptyStateErrors'
 import loginFormValidator from 'validators/formValidators/loginFormValidator'
 import handleFormChange from 'utils/forms/handleChange'
-import RedirectMessage from 'components/form/RedirectMessage'
-import {SubmitButton} from 'components/button'
-import AuthorizeComponent from 'components/AuthorizeComponent'
 
 function Login() {
   const [isSubmit, setIsSubmit] = useState(false)
@@ -23,7 +22,7 @@ function Login() {
     password: ''
   })
 
-  const {signIn, loading, error} = useSignIn()
+  const {signIn, error} = useSignIn()
 
   useEffect(() => {
     setErrorsState((errorsState) => loginFormValidator(formState, errorsState))
@@ -47,39 +46,35 @@ function Login() {
   }
 
   return (
-    <DefaultLayout loading={loading}>
-      <FormLayout title="Login" error={error && error.message}>
-        <TextInput
-          id="email"
-          label="Email"
-          value={formState.email}
-          error={errorsState.email}
-          onBlur={(e) => handleEvent(e)}
-          onChange={(e) => handleEvent(e)}
-        />
-        <PasswordInput
-          id="password"
-          label="Password"
-          value={formState.password}
-          error={errorsState.password}
-          onBlur={(e) => handleEvent(e)}
-          onChange={(e) => handleEvent(e)}
-          recovery={true}
-          autoComplete="off"
-        />
-        <SubmitButton disabled={isSubmit} onClick={handleLogin}>
-          Login
-        </SubmitButton>
-        <RedirectMessage
-          text="Not a memeber?"
-          textAction="Register NOW!"
-          path="/registration"
-        />
-      </FormLayout>
-    </DefaultLayout>
+    <FormLayout title="Login" error={error && error.message}>
+      <TextInput
+        id="email"
+        label="Email"
+        value={formState.email}
+        error={errorsState.email}
+        onBlur={(e) => handleEvent(e)}
+        onChange={(e) => handleEvent(e)}
+      />
+      <PasswordInput
+        id="password"
+        label="Password"
+        value={formState.password}
+        error={errorsState.password}
+        onBlur={(e) => handleEvent(e)}
+        onChange={(e) => handleEvent(e)}
+        recovery={true}
+        autoComplete="off"
+      />
+      <SubmitButton disabled={isSubmit} onClick={handleLogin}>
+        Login
+      </SubmitButton>
+      <RedirectMessage
+        text="Not a memeber?"
+        textAction="Register NOW!"
+        path="/registration"
+      />
+    </FormLayout>
   )
 }
 
-export default (
-  <AuthorizeComponent Component={Login} onUserLogedIn={true} redirectTo="/" />
-)
+export default AuthorizeComponent(Login, true, '/')

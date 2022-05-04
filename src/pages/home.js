@@ -1,17 +1,16 @@
-import React, {useEffect, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import React, {useState} from 'react'
+
+import AuthorizeComponent from 'components/AuthorizeComponent'
 import useAuthUser from 'global/AuthUser'
 
-import DefaultLayout from 'components/layouts/DefaultLayout'
 import ProjectsCardsWrapper from 'components/entity/projects/ProjectsWrapper'
 import ProjectCreateForm from 'components/entity/projects/ProjectCreateForm'
 import ProjectCard from 'components/entity/projects/ProjectCard'
 import ProjectModalCard from 'components/entity/projects/ProjectModalCard'
 import TaskExpandCard from 'components/entity/tasks/TaskExpandCard'
-import AuthorizeComponent from 'components/AuthorizeComponent'
 
 function Home() {
-  const {user, isLoading} = useAuthUser()
+  const {user} = useAuthUser()
   const [currentOpenProject, setCurrentOpenProject] = useState(undefined)
   const [currentOpenTask, setCurrentOpenTask] = useState(undefined)
 
@@ -23,15 +22,8 @@ function Home() {
     setCurrentOpenTask(task)
   }
 
-  const navigate = useNavigate()
-  useEffect(() => {
-    if (isLoading === false && !user) {
-      navigate('/login')
-    }
-  }, [user, isLoading, navigate])
-
   return (
-    <DefaultLayout loading={isLoading}>
+    <>
       <ProjectsCardsWrapper>
         {user?.projects?.map((project) => (
           <ProjectCard
@@ -57,14 +49,8 @@ function Home() {
           onCloseCardClick={setCurrentOpenTask}
         ></TaskExpandCard>
       )}
-    </DefaultLayout>
+    </>
   )
 }
 
-export default (
-  <AuthorizeComponent
-    Component={Home}
-    onUserLogedIn={false}
-    redirectTo="/login"
-  />
-)
+export default AuthorizeComponent(Home, false, '/login')
