@@ -20,7 +20,7 @@ export default function UserCard({firstName, lastName, email, avatarUrl}) {
             <Img src={avatarUrl} />
           ) : (
             <Avatar sx={{bgcolor: '#6400f7', width: 50, height: 50}}>
-              {shortName(firstName, lastName)}
+              {shortName()}
             </Avatar>
           )}
         </Tooltip>
