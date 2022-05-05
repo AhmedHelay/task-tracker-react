@@ -5,7 +5,6 @@ const FlexWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
-  overflow-x: hidden;
   overflow-y: auto;
 
   ::-webkit-scrollbar-thumb {
