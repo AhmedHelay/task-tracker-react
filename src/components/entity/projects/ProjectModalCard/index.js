@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 
 import {ModalCardWrapper} from 'components/entity/components'
 import ProjectUpdateForm from './ProjetUpdateForm'
@@ -9,6 +9,16 @@ import ClearIcon from '@mui/icons-material/Clear'
 import {useStyle} from './components'
 
 export default function ProjectModelCard({project, onCloseCardClick}) {
+  useEffect(() => {
+    const close = (e) => {
+      if (e.keyCode === 27) {
+        onCloseCardClick(false)
+      }
+    }
+    window.addEventListener('keydown', close)
+    return () => window.removeEventListener('keydown', close)
+  }, [onCloseCardClick])
+
   const classes = useStyle()
   return (
     <ModalCardWrapper>
