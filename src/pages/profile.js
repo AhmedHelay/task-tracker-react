@@ -11,14 +11,10 @@ function Profile() {
   const {user} = useAuthUser()
 
   return (
-    <>
-      {user && (
-        <CurrentUserCard>
-          <UserHeader user={user} />
-          <UpdateUserForm user={user} />
-        </CurrentUserCard>
-      )}
-    </>
+    <CurrentUserCard>
+      <UserHeader user={user} />
+      <UpdateUserForm user={user} />
+    </CurrentUserCard>
   )
 }
 
