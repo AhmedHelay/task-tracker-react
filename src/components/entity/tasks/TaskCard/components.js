@@ -12,7 +12,7 @@ export const useStyle = makeStyles(() => ({
     height: 'auto',
     transition: 'all 0.5s',
     '&:hover': {
-      border: '2px solid #619cff',
+      border: '2px solid #197da5',
       background: '#8a8684'
     }
   },
