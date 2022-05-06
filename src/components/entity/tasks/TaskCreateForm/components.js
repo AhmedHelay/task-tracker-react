@@ -5,24 +5,6 @@ export const useStyle = makeStyles(() => ({
     paddingTop: 15
   },
 
-  textField: {
-    width: 180,
-    borderColor: 'white',
-    marginLeft: 10,
-    height: 40,
-    autoComplete: 'off',
-    '& .MuiInputBase-input': {
-      fontWeight: 'bold',
-      color: '#fff' // Text color
-    },
-    '& .MuiInput-underline:before': {
-      borderBottomColor: '#fff8'
-    },
-    '& .MuiInput-underline:hover:before': {
-      borderBottomColor: '#fff'
-    }
-  },
-
   icon: {
     marginLeft: 10,
     marginBottom: 6,
