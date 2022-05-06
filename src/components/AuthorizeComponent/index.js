@@ -16,7 +16,6 @@ export default function AuthorizeComponent(
 
     useEffect(() => {
       if (isLoading === false && (onUserLogedIn ? user : !user)) {
-        console.log('error', redirectTo, onUserLogedIn, isLoading, user)
         navigate(redirectTo, {replace: true})
       }
     }, [user, isLoading, navigate])
