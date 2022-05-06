@@ -40,13 +40,13 @@ function Home() {
       {currentOpenProject && (
         <ProjectModalCard
           project={currentOpenProject}
-          onCloseCardClick={setCurrentOpenProject}
+          onCloseModalClick={setCurrentOpenProject}
         ></ProjectModalCard>
       )}
       {currentOpenTask && (
         <TaskExpandCard
           task={currentOpenTask}
-          onCloseCardClick={setCurrentOpenTask}
+          onCloseModalClick={setCurrentOpenTask}
         ></TaskExpandCard>
       )}
     </>
