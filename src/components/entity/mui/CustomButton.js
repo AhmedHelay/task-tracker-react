@@ -6,7 +6,8 @@ import makeStyles from '@material-ui/styles/makeStyles'
 export default function CustomButton({children, color, onClick, disabled}) {
   const useStyle = makeStyles(() => ({
     button: {
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      width: '200px'
     }
   }))
   const classes = useStyle()
