@@ -5,8 +5,8 @@ import {useQuery} from '@apollo/client'
 import {USERS} from 'api/query/users'
 
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
+import CustomButton from 'components/entity/mui/CustomButton'
+import CustomTextField from 'components/entity/mui/CustomTextField'
 import Typography from '@mui/material/Typography'
 import {useStyle} from './components'
 
@@ -26,27 +26,16 @@ export default function ProjectAddUser({project}) {
   return (
     <Box className={classes.root}>
       <Box className={classes.form}>
-        <TextField
-          inputProps={{
-            style: {padding: '0px 5px 5px 10px '}
-          }}
-          className={classes.textField}
+        <CustomTextField
           placeholder="Email"
-          variant="standard"
           value={email}
-          autoComplete="off"
           onChange={(e) => {
             setEmail(e.target.value)
           }}
         />
-        <Button
-          className={classes.button}
-          variant="contained"
-          disabled={loading}
-          onClick={() => addUserClick()}
-        >
+        <CustomButton disabled={loading} onClick={() => addUserClick()}>
           Add User
-        </Button>
+        </CustomButton>
       </Box>
       <Box className={classes.users}>
         {project.users.map((user) => (

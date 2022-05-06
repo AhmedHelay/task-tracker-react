@@ -14,30 +14,6 @@ export const useStyle = makeStyles(() => ({
     flexDirection: 'column'
   },
 
-  textField: {
-    width: 180,
-    borderColor: 'white',
-    marginLeft: 10,
-    height: 40,
-    autoComplete: 'off',
-    '& .MuiInputBase-input': {
-      fontWeight: 'bold',
-      color: '#fff' // Text color
-    },
-    '& .MuiInput-underline:before': {
-      borderBottomColor: '#fff8'
-    },
-    '& .MuiInput-underline:hover:before': {
-      borderBottomColor: '#fff'
-    }
-  },
-
-  button: {
-    fontWeight: 'bold',
-    marginTop: '10px',
-    width: '200px'
-  },
-
   users: {
     marginTop: '-50px',
     marginRight: '20px',
