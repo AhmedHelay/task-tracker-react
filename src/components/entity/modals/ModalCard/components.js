@@ -30,7 +30,7 @@ export const useStyle = makeStyles(() => ({
   },
 
   root: {
-    width: '580px',
+    width: 'auto',
     height: 'auto',
     padding: '10px',
     marginRight: '25px',
@@ -43,6 +43,7 @@ export const useStyle = makeStyles(() => ({
   },
 
   content: {
-    width: '100%'
+    width: '100%',
+    padding: '10px'
   }
 }))
