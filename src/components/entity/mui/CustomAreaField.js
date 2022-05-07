@@ -32,7 +32,7 @@ export default function CustomAreaField({
         onBlur={onBlur}
         onChange={onChange}
         multiline
-        rows={rows}
+        rows={rows ? rows : 1}
       />
     </>
   )
