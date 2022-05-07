@@ -34,6 +34,7 @@ export default function ProjectUpdateForm({project}) {
     <Box className={classes.root}>
       <CustomAreaField
         id="name"
+        label="Name"
         placeholder="Project Name"
         value={formState.name}
         onBlur={(e) => handleEvent(e)}
@@ -41,6 +42,7 @@ export default function ProjectUpdateForm({project}) {
       ></CustomAreaField>
       <CustomAreaField
         id="description"
+        label="Description"
         placeholder="Write Description Here ..."
         value={formState.description}
         onBlur={(e) => handleEvent(e)}
