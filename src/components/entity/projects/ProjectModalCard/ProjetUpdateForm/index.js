@@ -3,12 +3,12 @@ import React, {useState} from 'react'
 import useUpdateProject from 'hooks/mutations/projects/useUpdateProject'
 
 import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
+import CustomAreaField from 'components/entity/mui/CustomAreaField'
 import {useStyle} from './components'
 
 import handleFormChange from 'utils/forms/handleChange'
 import compareFormStates from 'utils/forms/compareFormStates'
+import CustomButton from 'components/entity/mui/CustomButton'
 
 export default function ProjectUpdateForm({project}) {
   const {id, name, description} = project
@@ -32,31 +32,25 @@ export default function ProjectUpdateForm({project}) {
 
   return (
     <Box className={classes.root}>
-      <TextField
+      <CustomAreaField
         id="name"
-        className={classes.textField}
         placeholder="Project Name"
         value={formState.name}
         onBlur={(e) => handleEvent(e)}
         onChange={(e) => handleEvent(e)}
-      ></TextField>
-      <TextField
+      ></CustomAreaField>
+      <CustomAreaField
         id="description"
-        className={classes.textField}
         placeholder="Write Description Here ..."
         value={formState.description}
         onBlur={(e) => handleEvent(e)}
         onChange={(e) => handleEvent(e)}
         multiline
         rows={10}
-      ></TextField>
-      <Button
-        className={classes.button}
-        onClick={() => onUpdateProjectClick()}
-        variant="contained"
-      >
+      ></CustomAreaField>
+      <CustomButton onClick={() => onUpdateProjectClick()}>
         Update Project
-      </Button>
+      </CustomButton>
     </Box>
   )
 }

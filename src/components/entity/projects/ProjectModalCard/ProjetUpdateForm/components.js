@@ -5,13 +5,6 @@ export const useStyle = makeStyles(() => ({
     padding: '10px'
   },
 
-  textField: {
-    backgroundColor: '#6b6867',
-    borderRadius: '10px',
-    marginBottom: '10px',
-    width: '500px'
-  },
-
   button: {
     fontWeight: 'bold',
     marginTop: '10px',
