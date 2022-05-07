@@ -8,7 +8,7 @@ import Button from '@mui/material/Button'
 import {useStyle} from './components'
 
 import handleFormChange from 'utils/forms/handleChange'
-import {compareFormStates} from 'utils/forms/compareFormStates'
+import compareFormStates from 'utils/forms/compareFormStates'
 
 export default function ProjectUpdateForm({project}) {
   const {id, name, description} = project
