@@ -1,6 +1,6 @@
 {
   "name": "task-tracker-react",
-  "homepage": ".",
+  "homepage": "https://{escalopa}.github.io",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -28,7 +28,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +61,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "gh-pages": "^3.2.3",
     "prettier": "2.6.0",
     "web-vitals": "^2.1.0"
   }
