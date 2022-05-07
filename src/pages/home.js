@@ -7,7 +7,7 @@ import ProjectsCardsWrapper from 'components/entity/projects/ProjectsWrapper'
 import ProjectCreateForm from 'components/entity/projects/ProjectCreateForm'
 import ProjectCard from 'components/entity/projects/ProjectCard'
 import ProjectModalCard from 'components/entity/projects/ProjectModalCard'
-import TaskExpandCard from 'components/entity/tasks/TaskExpandCard'
+import TaskModalCard from 'components/entity/tasks/TaskModalCard'
 
 function Home() {
   const {user} = useAuthUser()
@@ -44,10 +44,11 @@ function Home() {
         ></ProjectModalCard>
       )}
       {currentOpenTask && (
-        <TaskExpandCard
+        <TaskModalCard
+          userId={user.id}
           task={currentOpenTask}
           onCloseModalClick={setCurrentOpenTask}
-        ></TaskExpandCard>
+        ></TaskModalCard>
       )}
     </>
   )
