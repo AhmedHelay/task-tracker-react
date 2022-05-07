@@ -1,5 +1,5 @@
-import _ from 'lodash'
+import isEqual from 'lodash/isEqual'
 
 export default function compareFormStates(formState, INITIAL_STATE) {
-  return _.isEqual(formState, INITIAL_STATE)
+  return isEqual(formState, INITIAL_STATE)
 }

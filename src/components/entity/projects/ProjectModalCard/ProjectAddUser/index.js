@@ -6,11 +6,13 @@ import {USERS} from 'api/query/users'
 
 import Box from '@mui/material/Box'
 import CustomButton from 'components/entity/mui/CustomButton'
-import CustomTextField from 'components/entity/mui/CustomTextField'
-import Typography from '@mui/material/Typography'
+import CustomAreaField from 'components/entity/mui/CustomAreaField'
+import CustomLabel from 'components/entity/mui/CustomLabel'
+// import Typography from '@mui/material/Typography'
 import {useStyle} from './components'
 
 import canAddUserToProject from './utils'
+import UserCard from 'components/entity/users/UserCard'
 
 export default function ProjectAddUser({project}) {
   const [email, setEmail] = useState()
@@ -25,9 +27,22 @@ export default function ProjectAddUser({project}) {
   const classes = useStyle()
   return (
     <Box className={classes.root}>
+      <CustomLabel label="Project Users" />
+      <Box className={classes.users}>
+        {project?.users?.map((user) => (
+          <UserCard
+            key={user.id}
+            id={user.id}
+            email={user.email}
+            firstName={user.firstName}
+            lastName={user.lastName}
+            avatarUrl={user.avatarUrl}
+          />
+        ))}
+      </Box>
       <Box className={classes.form}>
-        <CustomTextField
-          placeholder="Email"
+        <CustomAreaField
+          placeholder="Type email here..."
           value={email}
           onChange={(e) => {
             setEmail(e.target.value)
@@ -36,13 +51,6 @@ export default function ProjectAddUser({project}) {
         <CustomButton disabled={loading} onClick={() => addUserClick()}>
           Add User
         </CustomButton>
-      </Box>
-      <Box className={classes.users}>
-        {project.users.map((user) => (
-          <Typography className={classes.email} key={user.id} id={user.id}>
-            {user.email}
-          </Typography>
-        ))}
       </Box>
     </Box>
   )
