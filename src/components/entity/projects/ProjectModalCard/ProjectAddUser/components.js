@@ -2,29 +2,29 @@ import makeStyles from '@material-ui/styles/makeStyles'
 
 export const useStyle = makeStyles(() => ({
   root: {
+    paddingRight: '10px',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
 
   form: {
-    padding: '10px',
     marginTop: '40px',
     display: 'flex',
     flexDirection: 'column'
   },
 
   users: {
-    marginTop: '-50px',
-    marginRight: '20px',
+    marginTop: '-40px',
     display: 'flex',
     flexDirection: 'column',
-    minWidth: '200px',
+    width: '200px',
     maxHeight: '200px',
     border: '2px solid #6b6867',
     borderRadius: '10px',
-    padding: '20px',
+    padding: '10px 20px 20px 20px',
     'overflow-y': 'auto',
+    'overflow-x': 'auto',
     '&::-webkit-scrollbar-thumb': {
       height: '10px',
       width: '10px',
