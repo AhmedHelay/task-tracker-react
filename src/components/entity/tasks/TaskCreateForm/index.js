@@ -3,10 +3,10 @@ import React, {useState} from 'react'
 import useCreateTask from 'hooks/mutations/tasks/useCreateTask'
 
 import Grid from '@mui/material/Grid'
-import TextField from '@mui/material/TextField'
 import AddIcon from '@mui/icons-material/Add'
 import IconButton from '@mui/material/IconButton'
 import {useStyle} from './components'
+import CustomTextField from 'components/entity/mui/CustomTextField'
 
 export default function TaskCreateForm({projectId}) {
   const [input, setInput] = useState('')
@@ -31,20 +31,13 @@ export default function TaskCreateForm({projectId}) {
       alignItems="center"
       justifyContent="center"
     >
-      <TextField
-        inputProps={{
-          style: {padding: '0px 5px 5px 10px '}
-        }}
-        className={classes.textField}
+      <CustomTextField
         placeholder="Add Task"
-        variant="standard"
         value={input}
-        autoComplete="off"
         onChange={(e) => {
           setInput(e.target.value)
         }}
       />
-
       <IconButton
         className={classes.icon}
         disabled={disabled}

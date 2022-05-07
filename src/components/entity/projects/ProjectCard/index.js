@@ -1,27 +1,12 @@
 import React from 'react'
 
-import Paper from '@material-ui/core/Paper'
-import makeStyles from '@material-ui/styles/makeStyles'
+import Box from '@material-ui/core/Box'
 import Header from './Header'
 
 import TaskCard from 'components/entity/tasks/TaskCard'
 import TasksCardsWrapper from 'components/entity/tasks/TasksCardsWrapper'
 import TaskCreateForm from 'components/entity/tasks/TaskCreateForm'
-
-const useStyle = makeStyles(() => ({
-  root: {
-    minWidth: '250px',
-    maxWidth: '250px',
-    padding: '10px',
-    marginRight: '25px',
-    borderRadius: '10px',
-    backgroundColor: '#1a1c1e',
-    maxHeight: '95%',
-    overFlowY: 'auto',
-    display: 'flex',
-    flexDirection: 'column'
-  }
-}))
+import {useStyle} from './components'
 
 export default function ProjectCard({
   id,
@@ -33,7 +18,7 @@ export default function ProjectCard({
   const classes = useStyle()
 
   return (
-    <Paper className={classes.root}>
+    <Box className={classes.root}>
       <Header
         id={id}
         name={name}
@@ -54,6 +39,6 @@ export default function ProjectCard({
         ))}
       </TasksCardsWrapper>
       <TaskCreateForm projectId={id} />
-    </Paper>
+    </Box>
   )
 }
