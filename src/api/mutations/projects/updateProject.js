@@ -6,6 +6,6 @@ export const UPDATE_PROJECT = gql`
     updateProject(projectId: $id, name: $name, description: $description) {
       ...ProjectFragment
     }
-    ${projectFragment}
   }
+  ${projectFragment}
 `

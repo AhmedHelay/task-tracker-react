@@ -23,8 +23,8 @@ export const PageContent = styled.div`
   flex-wrap: wrap;
   max-height: 100%;
   margin: 0px 10px 10px 10px;
-  overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-x: auto;
+  overflow-y: auto;
   ::-webkit-scrollbar-thumb {
     height: 10px;
     width: 10px;

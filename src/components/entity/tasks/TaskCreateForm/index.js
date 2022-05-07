@@ -1,15 +1,19 @@
 import React, {useState} from 'react'
 
-import Button from '@mui/material/Button'
-import Grid from '@mui/material/Grid'
-import TextField from '@mui/material/TextField'
 import useCreateTask from 'hooks/mutations/tasks/useCreateTask'
+
+import Grid from '@mui/material/Grid'
+import AddIcon from '@mui/icons-material/Add'
+import IconButton from '@mui/material/IconButton'
+import {useStyle} from './components'
+import CustomTextField from 'components/entity/mui/CustomTextField'
 
 export default function TaskCreateForm({projectId}) {
   const [input, setInput] = useState('')
   const [disabled, setdisabled] = useState(false)
 
   const {createTask} = useCreateTask()
+  const classes = useStyle()
 
   async function handleClick() {
     if (input && input.length > 0) {
@@ -21,35 +25,26 @@ export default function TaskCreateForm({projectId}) {
   }
 
   return (
-    <Grid sx={{pb: 1}} container alignItems="center" justifyContent="center">
-      <TextField
-        sx={{
-          input: {color: 'white', fontWeight: 'bold'},
-          bgcolor: '#6b6867',
-          maxWidth: 200,
-          borderRadius: 2,
-          autoComplete: 'off',
-          mb: 2,
-          mt: 2
-        }}
-        variant="outlined"
+    <Grid
+      className={classes.root}
+      container
+      alignItems="center"
+      justifyContent="center"
+    >
+      <CustomTextField
+        placeholder="Add Task"
         value={input}
         onChange={(e) => {
           setInput(e.target.value)
         }}
       />
-      <Button
-        sx={{
-          fontWeight: 'bold',
-          minWidth: 200,
-          mb: 1
-        }}
+      <IconButton
+        className={classes.icon}
         disabled={disabled}
-        variant="contained"
         onClick={handleClick}
       >
-        Create Task
-      </Button>
+        <AddIcon />
+      </IconButton>
     </Grid>
   )
 }

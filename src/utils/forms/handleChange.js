@@ -1,8 +1,8 @@
 export default function handleFormChange(event, formValues, setFormValues) {
-  const {value, id} = event.target
+  const {value, id, name} = event.target
   if (event.type === 'blur') {
-    setFormValues({...formValues, [id]: value})
+    setFormValues({...formValues, [id ? id : name]: value.trim()})
   } else if (event.type === 'change') {
-    setFormValues({...formValues, [id]: value.trim()})
+    setFormValues({...formValues, [id ? id : name]: value})
   }
 }

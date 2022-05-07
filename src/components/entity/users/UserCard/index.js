@@ -1,31 +1,18 @@
 import React from 'react'
 
-import Avatar from '@mui/material/Avatar'
-import Grid from '@mui/material/Grid'
-import Tooltip from '@mui/material/Tooltip'
-import {Card, Img, Text} from '../components'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import {useStyle} from './components'
+import UserAvatar from './UserAvatar'
 
-export default function UserCard({firstName, lastName, email, avatarUrl}) {
-  const shortName = () =>
-    firstName && lastName ? firstName.charAt(0) + lastName.charAt(0) : 'A'
-
-  const fullName = () =>
-    firstName && lastName ? firstName + ' ' + lastName : 'Anonymous'
-
+export default function UserCard({firstName, lastName, email}) {
+  const classes = useStyle()
   return (
-    <Card>
-      <Grid container alignItems="center" justifyContent="start">
-        <Tooltip title={fullName()} placement="top" arrow>
-          {avatarUrl ? (
-            <Img src={avatarUrl} />
-          ) : (
-            <Avatar sx={{bgcolor: '#6400f7', width: 50, height: 50}}>
-              {shortName(firstName, lastName)}
-            </Avatar>
-          )}
-        </Tooltip>
-        <Text>{email}</Text>
-      </Grid>
-    </Card>
+    <Box className={classes.root}>
+      <Box className={classes.body}>
+        <UserAvatar firstName={firstName} lastName={lastName} />
+        <Typography className={classes.email}>{email}</Typography>
+      </Box>
+    </Box>
   )
 }

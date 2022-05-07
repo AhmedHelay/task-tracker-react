@@ -3,11 +3,13 @@ import React, {useEffect, useState} from 'react'
 import useUpdateUser from 'hooks/mutations/users/useUpdateUser'
 
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+import CustomButton from 'components/entity/mui/CustomButton'
 import TextInput from 'components/form/TextInput'
 
 import handleFormChange from 'utils/forms/handleChange'
-import registrationFormValidator from 'validators/formValidators/registrationFormValidator'
+import removeEmptyProperties from 'utils/forms/removeEmptyProperties'
+import validateUpdateForm from './utils'
+import udpateUserValidator from 'validators/formValidators/udpateUserValidator'
 
 export default function UpdateUserForm({user}) {
   const INITIAL_FORM_STATE = {
@@ -15,38 +17,27 @@ export default function UpdateUserForm({user}) {
     firstName: '',
     lastName: ''
   }
-  const {updateUser, loading} = useUpdateUser()
   const [formState, setFormState] = useState(INITIAL_FORM_STATE)
   const [errorState, setErrorState] = useState(INITIAL_FORM_STATE)
 
+  const {updateUser, loading} = useUpdateUser()
   useEffect(() => {
-    setErrorState((errorState) =>
-      registrationFormValidator(formState, errorState)
-    )
+    setErrorState((errorState) => udpateUserValidator(formState, errorState))
   }, [formState])
 
   function handleEvent(event) {
     handleFormChange(event, formState, setFormState)
   }
   async function handleUpdateUser() {
-    if (
-      !errorState.email ||
-      !errorState.firstName ||
-      !errorState.lastName ||
-      formState.email ||
-      formState.firstName ||
-      formState.lastName
-    ) {
-      Object.keys(formState).forEach(
-        (key) => formState[key] === '' && delete formState[key]
-      )
+    if (validateUpdateForm(formState, errorState, INITIAL_FORM_STATE)) {
+      removeEmptyProperties(formState)
       await updateUser(formState)
       setFormState(INITIAL_FORM_STATE)
     }
   }
 
   return (
-    <Box sx={{display: 'flex', flexDirection: 'column', pl: 3, pr: 25}}>
+    <Box sx={{display: 'flex', flexDirection: 'column', pl: 2, pr: 5}}>
       <form>
         <TextInput
           id="email"
@@ -54,7 +45,6 @@ export default function UpdateUserForm({user}) {
           label="Email"
           value={formState.email}
           error={errorState.email}
-          onBlur={(e) => handleEvent(e)}
           onChange={(e) => handleEvent(e)}
           autoComplete="off"
         />
@@ -64,7 +54,6 @@ export default function UpdateUserForm({user}) {
           label="First Name"
           value={formState.firstName}
           error={errorState.firstName}
-          onBlur={(e) => handleEvent(e)}
           onChange={(e) => handleEvent(e)}
           autoComplete="off"
         />
@@ -74,23 +63,13 @@ export default function UpdateUserForm({user}) {
           label="Last Name"
           value={formState.lastName}
           error={errorState.lastName}
-          onBlur={(e) => handleEvent(e)}
           onChange={(e) => handleEvent(e)}
           autoComplete="off"
         />
-        <Button
-          sx={{
-            mt: 2,
-            maxWidth: '200px',
-            fontWeight: 'bold'
-          }}
-          size="small"
-          onClick={(e) => handleUpdateUser(e)}
-          disabled={loading}
-          variant="contained"
-        >
+        <Box sx={{mt: 3}}></Box>
+        <CustomButton onClick={(e) => handleUpdateUser(e)} disabled={loading}>
           Update User
-        </Button>
+        </CustomButton>
       </form>
     </Box>
   )

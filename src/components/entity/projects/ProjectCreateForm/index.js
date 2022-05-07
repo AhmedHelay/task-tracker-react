@@ -2,14 +2,15 @@ import React, {useState} from 'react'
 
 import useCreateProject from 'hooks/mutations/projects/useCreateProject'
 
-import Button from '@mui/material/Button'
+import Box from '@mui/material/Box'
 import Collapse from '@mui/material/Collapse'
-import Grid from '@mui/material/Grid'
+import CustomTextField from 'components/entity/mui/CustomTextField'
+import CustomButton from 'components/entity/mui/CustomButton'
 import IconButton from '@mui/material/IconButton'
-import TextField from '@mui/material/TextField'
-
 import AddIcon from '@mui/icons-material/Add'
 import ClearIcon from '@mui/icons-material/Clear'
+
+import {useStyle} from './components'
 
 export default function ProjectCreateForm() {
   const [input, setInput] = useState('')
@@ -17,6 +18,7 @@ export default function ProjectCreateForm() {
   const [showForm, setShowForm] = useState(false)
 
   const {createProject} = useCreateProject()
+  const classes = useStyle()
 
   async function handleClick() {
     if (input && input.length > 0) {
@@ -28,60 +30,43 @@ export default function ProjectCreateForm() {
   }
 
   return (
-    <Grid
-      sx={{
-        bgcolor: '#1a1c1e',
-        maxWidth: 200,
-        minWidth: 200,
-        p: 2,
-        borderRadius: 3
-      }}
-      container
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Box className={classes.root}>
       <Collapse in={showForm}>
-        <TextField
-          sx={{
-            input: {color: 'white', fontWeight: 'bold'},
-            bgcolor: '#6b6867',
-            borderRadius: 2,
-            autoComplete: 'off',
-            mb: 2
-          }}
-          variant="outlined"
-          value={input}
-          onChange={(e) => {
-            setInput(e.target.value)
-          }}
-        />
-        <Button
-          sx={{
-            fontWeight: 'bold',
-            mb: 1
-          }}
-          disabled={disabled}
-          variant="contained"
-          onClick={handleClick}
-        >
-          Create Project
-        </Button>
-        <IconButton
-          sx={{color: '#4d1100'}}
-          color="warning"
-          onClick={() => setShowForm(false)}
-        >
-          <ClearIcon />
-        </IconButton>
+        <Box className={classes.form}>
+          <CustomTextField
+            placeholder="Project Name"
+            value={input}
+            onChange={(e) => {
+              setInput(e.target.value)
+            }}
+          />
+          <Box className={classes.action}>
+            <CustomButton
+              disabled={disabled}
+              color="success"
+              onClick={handleClick}
+            >
+              Create Project
+            </CustomButton>
+            <IconButton
+              className={classes.iconButton}
+              sx={{color: '#912000'}}
+              onClick={() => setShowForm(false)}
+            >
+              <ClearIcon />
+            </IconButton>
+          </Box>
+        </Box>
       </Collapse>
       <Collapse in={!showForm}>
         <IconButton
-          sx={{color: 'white  ', bgcolor: '#6b6867'}}
+          className={classes.iconButton}
+          color="success"
           onClick={() => setShowForm(true)}
         >
-          <AddIcon />
+          <AddIcon fontSize="large" />
         </IconButton>
       </Collapse>
-    </Grid>
+    </Box>
   )
 }

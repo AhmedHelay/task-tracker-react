@@ -3,12 +3,14 @@ import React from 'react'
 import {useNavigate} from 'react-router-dom'
 import useSignOut from 'hooks/mutations/auth/useSignOut'
 
+import Box from '@mui/material/Box'
 import HomeIcon from '@mui/icons-material/Home'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import GroupIcon from '@mui/icons-material/Group'
 import LogoutIcon from '@mui/icons-material/Logout'
+import IconButton from '@mui/material/IconButton'
 
-import {NavItem, NavList, useStyles} from './components'
+import {useStyles} from './components'
 
 export default function NavBar() {
   const classes = useStyles()
@@ -29,7 +31,6 @@ export default function NavBar() {
   ]
 
   const {signOut} = useSignOut()
-
   function handleSignOut() {
     signOut(false)
   }
@@ -40,17 +41,24 @@ export default function NavBar() {
   }
 
   return (
-    <NavList>
+    <Box className={classes.root}>
       {NavbarData.map((item, index) => {
         return (
-          <NavItem key={index} onClick={() => handleNavigate(item.path)}>
+          <IconButton
+            className={classes.iconButton}
+            key={index}
+            onClick={() => handleNavigate(item.path)}
+          >
             {item.icon}
-          </NavItem>
+          </IconButton>
         )
       })}
-      <NavItem onClick={() => handleSignOut()}>
-        {<LogoutIcon className={classes.icon} fontSize="large" />}
-      </NavItem>
-    </NavList>
+      <IconButton
+        className={classes.iconButton}
+        onClick={() => handleSignOut()}
+      >
+        {<LogoutIcon className={classes.icon} />}
+      </IconButton>
+    </Box>
   )
 }

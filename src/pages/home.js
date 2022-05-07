@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import React, {useState} from 'react'
+
+import AuthorizeComponent from 'components/AuthorizeComponent'
 import useAuthUser from 'global/AuthUser'
 
-import DefaultLayout from 'components/layouts/DefaultLayout'
 import ProjectsCardsWrapper from 'components/entity/projects/ProjectsWrapper'
 import ProjectCreateForm from 'components/entity/projects/ProjectCreateForm'
 import ProjectCard from 'components/entity/projects/ProjectCard'
 import ProjectModalCard from 'components/entity/projects/ProjectModalCard'
-import TaskExpandCard from 'components/entity/tasks/TaskExpandCard'
+import TaskModalCard from 'components/entity/tasks/TaskModalCard'
 
-export default function Home() {
-  const {user, isLoading} = useAuthUser()
+function Home() {
+  const {user} = useAuthUser()
   const [currentOpenProject, setCurrentOpenProject] = useState(undefined)
   const [currentOpenTask, setCurrentOpenTask] = useState(undefined)
 
@@ -22,15 +22,8 @@ export default function Home() {
     setCurrentOpenTask(task)
   }
 
-  const navigate = useNavigate()
-  useEffect(() => {
-    if (isLoading === false && !user) {
-      navigate('/login')
-    }
-  }, [user, isLoading, navigate])
-
   return (
-    <DefaultLayout loading={isLoading}>
+    <>
       <ProjectsCardsWrapper>
         {user?.projects?.map((project) => (
           <ProjectCard
@@ -47,15 +40,18 @@ export default function Home() {
       {currentOpenProject && (
         <ProjectModalCard
           project={currentOpenProject}
-          onCloseCardClick={setCurrentOpenProject}
+          onCloseModalClick={setCurrentOpenProject}
         ></ProjectModalCard>
       )}
       {currentOpenTask && (
-        <TaskExpandCard
+        <TaskModalCard
+          userId={user.id}
           task={currentOpenTask}
-          onCloseCardClick={setCurrentOpenTask}
-        ></TaskExpandCard>
+          onCloseModalClick={setCurrentOpenTask}
+        ></TaskModalCard>
       )}
-    </DefaultLayout>
+    </>
   )
 }
+
+export default AuthorizeComponent(Home, false, '/login')
