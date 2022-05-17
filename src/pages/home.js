@@ -10,16 +10,23 @@ import ProjectModalCard from 'components/entity/projects/ProjectModalCard'
 import TaskModalCard from 'components/entity/tasks/TaskModalCard'
 
 function Home() {
+  const INITIAL_STATE = {projectId: '', id: ''}
   const {user} = useAuthUser()
-  const [currentOpenProject, setCurrentOpenProject] = useState(undefined)
-  const [currentOpenTask, setCurrentOpenTask] = useState(undefined)
+  const [projectModalId, setProjectModalId] = useState()
+  const [taskModalId, setTaskModalID] = useState(INITIAL_STATE)
 
-  function showProject(project) {
-    setCurrentOpenProject(project)
+  function showTaskModal(projectId, id) {
+    setTaskModalID({projectId: projectId, id: id})
   }
 
-  function showTask(task) {
-    setCurrentOpenTask(task)
+  const project = () => {
+    return user?.projects?.find((project) => project.id === projectModalId)
+  }
+
+  const task = () => {
+    return user?.projects
+      ?.find((project) => project.id === taskModalId.projectId)
+      ?.tasks.find((task) => task.id === taskModalId.id)
   }
 
   return (
@@ -31,23 +38,23 @@ function Home() {
             id={project.id}
             name={project.name}
             tasks={project.tasks}
-            onTaskShowClick={showTask}
-            onProjectShowClick={() => showProject(project)}
+            onTaskShowClick={showTaskModal}
+            onProjectShowClick={() => setProjectModalId(project.id)}
           />
         ))}
         <ProjectCreateForm />
       </ProjectsCardsWrapper>
-      {currentOpenProject && (
+      {projectModalId && (
         <ProjectModalCard
-          project={currentOpenProject}
-          onCloseModalClick={setCurrentOpenProject}
+          project={project()}
+          onCloseModalClick={() => setProjectModalId(undefined)}
         ></ProjectModalCard>
       )}
-      {currentOpenTask && (
+      {taskModalId.projectId && taskModalId.id && (
         <TaskModalCard
           userId={user.id}
-          task={currentOpenTask}
-          onCloseModalClick={setCurrentOpenTask}
+          task={task()}
+          onCloseModalClick={() => setTaskModalID(INITIAL_STATE)}
         ></TaskModalCard>
       )}
     </>
