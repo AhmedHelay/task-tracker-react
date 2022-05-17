@@ -14,7 +14,7 @@ export default function ProjectUpdateForm({project}) {
   const {id, name, description} = project
   const INITIAL_STATE = {
     name: name,
-    description: description
+    description: description ? description : ''
   }
   const [formState, setFormState] = useState(INITIAL_STATE)
   const {updateProject} = useUpdateProject()
