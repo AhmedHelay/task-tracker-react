@@ -33,7 +33,7 @@ export default function ProjectCard({
             status={task.status}
             createdAt={task.createdAt}
             onTaskShowClick={() => {
-              onTaskShowClick(task)
+              onTaskShowClick(id, task.id)
             }}
           />
         ))}

@@ -27,3 +27,6 @@ node_modules
 .idea
 .prettierrc
 .prettierignore
+
+# Local Netlify folder
+.netlify
