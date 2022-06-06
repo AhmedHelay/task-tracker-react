@@ -4,7 +4,8 @@ export const useStyle = makeStyles(() => ({
   root: {
     backgroundColor: '#1a1c1e',
     minWidth: 300,
-    borderRadius: 5
+    borderRadius: 5,
+    padding: 5
   },
 
   form: {

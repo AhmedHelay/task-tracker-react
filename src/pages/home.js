@@ -24,9 +24,11 @@ function Home() {
   }
 
   const task = () => {
-    return user?.projects
+    const task = user?.projects
       ?.find((project) => project.id === taskModalId.projectId)
       ?.tasks.find((task) => task.id === taskModalId.id)
+    console.log(task.id)
+    return task
   }
 
   return (
