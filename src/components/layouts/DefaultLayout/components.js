@@ -1,7 +1,12 @@
 import styled from 'styled-components'
 
 export const PageWrapper = styled.div`
-  background-color: #121212;
+  background: linear-gradient(
+    0deg,
+    rgba(41, 53, 60, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+
   height: 100vh;
   width: 100%;
   display: flex;

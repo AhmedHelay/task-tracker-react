@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import AuthorizeComponent from 'components/AuthorizeComponent'
 import useAuthUser from 'global/AuthUser'
 
-import ProjectsCardsWrapper from 'components/entity/projects/ProjectsWrapper'
+import ProjectsWrapper from 'components/entity/projects/ProjectsWrapper'
 import ProjectCreateForm from 'components/entity/projects/ProjectCreateForm'
 import ProjectCard from 'components/entity/projects/ProjectCard'
 import ProjectModalCard from 'components/entity/projects/ProjectModalCard'
@@ -24,14 +24,16 @@ function Home() {
   }
 
   const task = () => {
-    return user?.projects
+    const task = user?.projects
       ?.find((project) => project.id === taskModalId.projectId)
       ?.tasks.find((task) => task.id === taskModalId.id)
+    console.log(task.id)
+    return task
   }
 
   return (
     <>
-      <ProjectsCardsWrapper>
+      <ProjectsWrapper>
         {user?.projects?.map((project) => (
           <ProjectCard
             key={project.id}
@@ -43,7 +45,7 @@ function Home() {
           />
         ))}
         <ProjectCreateForm />
-      </ProjectsCardsWrapper>
+      </ProjectsWrapper>
       {projectModalId && (
         <ProjectModalCard
           project={project()}

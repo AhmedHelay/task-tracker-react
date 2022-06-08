@@ -12,6 +12,9 @@ import {useStyle} from './components'
 export default function Header({id, name, onProjectShowClick}) {
   const {destroyProject} = useDestoryProject()
   const classes = useStyle()
+  const shotProjectName = () => {
+    return name.length > 15 ? name.slice(0, 15).concat('..') : name
+  }
 
   function handleDestroy() {
     const result = confirm('Are you sure you want to delete this project ?')
@@ -19,7 +22,7 @@ export default function Header({id, name, onProjectShowClick}) {
   }
   return (
     <Box component="div" className={classes.root}>
-      <Typography className={classes.name}>{name}</Typography>
+      <Typography className={classes.name}>{shotProjectName()}</Typography>
       <IconButton
         className={classes.icon}
         color="info"
