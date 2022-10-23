@@ -2,7 +2,10 @@
 
 This project is a front-end clone for trello made by me (**Didn't follow any tutorials**)
 
-Deployment Link: [trello-live](https://escalopa-trello.netlify.app/)
+
+Project has been deployed on 2 different platforms (netlify & gh pages), Here are the links to live version:
+- [trello-netlify](https://escalopa-trello.netlify.app/)
+- [trello-gh-pages](https://escalopa.github.io/task-tracker-frontend/)
 
 Backend URL: https://itis-task-tracker-be.herokuapp.com, Actually the [project](https://github.com/escalopa/task-tracker-backend) must have been the backend for this project but I couldn't finish it on time, so I used someone's else backend 😃
 
